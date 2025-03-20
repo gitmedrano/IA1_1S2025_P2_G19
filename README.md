@@ -1,0 +1,2 @@
+# IA1_1S2025_P2_G19
+IA1 Proyecto 2 TurisAR
