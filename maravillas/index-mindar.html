@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las 7 Maravillas de Guatemala</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h2 {
+            font-size: 1.2rem;
+            color: #fdbb2d;
+            margin-bottom: 1rem;
+        }
+
+        .ar-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .ar-scene {
+            width: 100%;
+            height: 100%;
+        }
+
+        .instructions {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+            z-index: 1000;
+        }
+
+        .instructions p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .instructions i {
+            color: #fdbb2d;
+            margin-right: 0.5rem;
+        }
+
+        /* Loading indicator */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header h2 {
+                font-size: 1.5rem;
+            }
+
+            .instructions {
+                max-width: 600px;
+            }
+
+            .instructions p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1><i class="fas fa-camera"></i> TurisAR</h1>
+        <h2>Las 7 Maravillas de Guatemala</h2>
+    </div>
+
+    <div class="ar-container">
+        <a-scene class="ar-scene" mindar-image="imageTargetSrc: ./7_maravillas_gt.mind;" vr-mode-ui="enabled: false"
+            device-orientation-permission-ui="enabled: false">
+            <a-assets>
+                <img id="cenotes" src="../assets/cenotes/cenotes_candelaria_1.jpg" alt="Cenotes de Candelaria">
+                <img id="lago_atitlan" src="../assets/lago_atitlan/lago_atitlan_1.jpg" alt="Lago de Atitlán">
+                <img id="laguna_brava" src="../assets/laguna_brava/laguna_brava_1.jpg" alt="Laguna Brava">
+                <img id="las_conchas" src="../assets/las_conchas/las_conchas_1.jpg" alt="Las Conchas">
+                <img id="rio_dulce" src="../assets/rio_dulce/rio_dulce_1.jpg" alt="Río Dulce">
+                <img id="semuc_champey" src="../assets/semuc_champey/semuc_champey_1.jpg" alt="Semuc Champey">
+                <img id="tikal" src="../assets/tikal/tikal_1.jpg" alt="Ruinas de Tikal">
+            </a-assets>
+
+            <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+            <a-entity mindar-image-target="targetIndex: 0">
+                <a-plane src="#cenotes" position="0 0 0" width="1" height="0.75" rotation="0 0 0"></a-plane>
+            </a-entity>
+
+            <a-entity mindar-image-target="targetIndex: 1">
+                <a-plane src="#lago_atitlan" position="0 0 0" width="1" height="0.75" rotation="0 0 0"></a-plane>
+            </a-entity>
+
+            <a-entity mindar-image-target="targetIndex: 2">
+                <a-plane src="#laguna_brava" position="0 0 0" width="1" height="0.75" rotation="0 0 0"></a-plane>
+            </a-entity>
+
+            <a-entity mindar-image-target="targetIndex: 3">
+                <a-plane src="#las_conchas" position="0 0 0" width="1" height="0.75" rotation="0 0 0"></a-plane>
+            </a-entity>
+
+            <a-entity mindar-image-target="targetIndex: 4">
+                <a-plane src="#rio_dulce" position="0 0 0" width="1" height="0.75" rotation="0 0 0"></a-plane>
+            </a-entity>
+
+            <a-entity mindar-image-target="targetIndex: 5">
+                <a-plane src="#semuc_champey" position="0 0 0" width="1" height="0.75" rotation="0 0 0"></a-plane>
+            </a-entity>
+
+            <a-entity mindar-image-target="targetIndex: 6">
+                <a-plane src="#tikal" position="0 0 0" width="1" height="0.75" rotation="0 0 0"></a-plane>
+            </a-entity>
+        </a-scene>
+    </div>
+
+    <div class="instructions">
+        <p><i class="fas fa-info-circle"></i> Apunta tu cámara hacia una imagen de las 7 Maravillas de Guatemala</p>
+        <p><i class="fas fa-hand-point-up"></i> Mantén el dispositivo estable para mejor experiencia</p>
+    </div>
+
+    <div class="loading">
+        <p><i class="fas fa-spinner fa-spin"></i> Cargando experiencia AR...</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const loading = document.querySelector('.loading');
+            loading.classList.add('active');
+
+            const sceneEl = document.querySelector('a-scene');
+            sceneEl.addEventListener('loaded', function () {
+                loading.classList.remove('active');
+            });
+
+            sceneEl.addEventListener('arError', function (ev) {
+                loading.classList.remove('active');
+                alert('Lo sentimos, hubo un error al iniciar la experiencia AR. Por favor, asegúrate de dar permiso a la cámara y refresca la página.');
+            });
+        });
+    </script>
+</body>
+
+</html>
