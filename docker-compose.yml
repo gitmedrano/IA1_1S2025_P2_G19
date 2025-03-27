@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: guatemala-turismo
+    ports:
+      - "80:80"
+    volumes:
+      - ./assets:/usr/share/nginx/html/assets
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge 
