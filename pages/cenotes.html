@@ -1,92 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cenotes</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        .section h2 {
-            margin-top: 0;
-            color: #007BFF;
-            border-bottom: 2px solid #007BFF;
-            padding-bottom: 5px;
-        }
-        .section p {
-            line-height: 1.6;
-        }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            max-width: 100%;
-            background: #000;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .image-container img {
-            width: calc(50% - 10px);
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        @media (max-width: 600px) {
-            .image-container img {
-                width: 100%;
-            }
-        }
-    </style>
+    <title>Cenotes de Candelaria - Maravillas de Guatemala</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="page-styles.css">
 </head>
+
 <body>
-<div class="container">
-    <div class="section" id="info-section">
-        <h2>Información</h2>
-        <p>Descripción de la maravilla de Guatemala.</p>
-    </div>
-    <div class="section" id="video-section">
-        <h2>Videos</h2>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/picwSYWAGgs?si=XJxo2zzEiOrVwgKu" frameborder="0" allowfullscreen></iframe>
+    <nav class="navbar">
+        <a href="../index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+        <h1><i class="fas fa-water"></i> Cenotes de Candelaria</h1>
+    </nav>
+
+    <div class="container">
+        <div class="section" id="info-section">
+            <h2>Información</h2>
+            <p>Los Cenotes de Candelaria son una maravilla natural ubicada en Alta Verapaz, Guatemala. Este sistema de
+                cuevas y ríos subterráneos ofrece una experiencia única donde el agua cristalina y las formaciones
+                rocosas crean un espectáculo natural impresionante. Los cenotes son el resultado de miles de años de
+                erosión en la roca caliza, formando piscinas naturales de agua cristalina rodeadas de estalactitas y
+                estalagmitas.</p>
+        </div>
+
+        <div class="section" id="video-section">
+            <h2>Explora los Cenotes</h2>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/picwSYWAGgs?si=XJxo2zzEiOrVwgKu" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="section" id="image-section">
+            <h2>Galería de Imágenes</h2>
+            <div class="image-grid">
+                <div class="image-card">
+                    <img src="../assets/cenotes/cenotes_candelaria_2.jpg" alt="Vista de los Cenotes de Candelaria">
+                    <div class="image-caption">Aguas cristalinas de los Cenotes</div>
+                </div>
+                <div class="image-card">
+                    <img src="../assets/cenotes/cenotes_candelaria_3.jpg" alt="Interior de los Cenotes de Candelaria">
+                    <div class="image-caption">Formaciones rocosas espectaculares</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="external-links">
+            <h2>Enlaces Externos</h2>
+            <div class="external-links">
+                <a href="https://www.guatemala.com/guias/aventura/15-maravillas-naturales-de-guatemala/" target="_blank"
+                    class="external-link">
+                    <i class="fas fa-globe"></i>
+                    <span>Web Oficial Guatemala Guias</span>
+                </a>
+                <a href="https://www.google.com/maps/place/15%C2%B056'23.2%22N+91%C2%B047'25.6%22W/@15.939783,-91.7930229,1438m/data=!3m1!1e3!4m4!3m3!8m2!3d15.939783!4d-91.790448!5m1!1e4?entry=ttu&g_ep=EgoyMDI1MDMyNC4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank" class="external-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Ubicación en Google Maps</span>
+                </a>
+            </div>
         </div>
     </div>
-    <div class="section" id="image-section">
-        <h2>Imágenes</h2>
-        <div class="image-container">
-            <img src="../assets/cenotes/cenotes_candelaria_2.jpg" alt="Descripción de la imagen 1">
-            <img src="../assets/cenotes/cenotes_candelaria_3.jpg" alt="Descripción de la imagen 2">
-        </div>
-    </div>
-</div>
 </body>
+
 </html>

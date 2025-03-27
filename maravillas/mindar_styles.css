@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    min-height: 100vh;
+    color: white;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h2 {
+    font-size: 1.2rem;
+    color: #fdbb2d;
+    margin-bottom: 1rem;
+}
+
+.ar-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.ar-scene {
+    width: 100%;
+    height: 100%;
+}
+
+.instructions {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    max-width: 90%;
+    z-index: 1000;
+}
+
+.instructions p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.instructions i {
+    color: #fdbb2d;
+    margin-right: 0.5rem;
+}
+
+/* Loading indicator */
+.loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    display: none;
+}
+
+.loading.active {
+    display: block;
+}
+
+@media (min-width: 768px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .header h2 {
+        font-size: 1.5rem;
+    }
+
+    .instructions {
+        max-width: 600px;
+    }
+
+    .instructions p {
+        font-size: 1rem;
+    }
+}
