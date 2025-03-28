@@ -1,0 +1,166 @@
+[
+  {
+    "id": "cenotes_candelaria",
+    "targetIndex": "targetIndex: 0",
+    "images": [
+      {
+        "id": "cenotes_candelaria_1",
+        "src": "../assets/cenotes_candelaria/cenotes_candelaria_1.jpg",
+        "alt": "Cenotes Candelaria"
+      },
+      {
+        "id": "cenotes_candelaria_2",
+        "src": "../assets/cenotes_candelaria/cenotes_candelaria_2.jpg",
+        "alt": "Cenotes Candelaria"
+      }
+    ],
+    "web": ".././pages/cenotes_candelaria.html",
+    "location": "https://maps.app.goo.gl/mM8dMYTouK4HM7Z67",
+    "video": {
+      "id": "cenotes_candelaria_video_1",
+      "src": "../assets/cenotes_candelaria/cenotes_candelaria_video_1.mp4"
+    },
+    "text": "Los Cenotes de Candelaria son un conjunto de pozas naturales ubicadas en el departamento de Alta Verapaz, Guatemala. Son conocidos por sus aguas cristalinas y su entorno natural exuberante."
+  },
+  {
+    "id": "lago_atitlan",
+    "targetIndex": "targetIndex: 1",
+    "images": [
+      {
+        "id": "lago_atitlan_1",
+        "src": "../assets/lago_atitlan/lago_atitlan_1.jpg",
+        "alt": "Lago Atitlán"
+      },
+      {
+        "id": "lago_atitlan_2",
+        "src": "../assets/lago_atitlan/lago_atitlan_2.jpg",
+        "alt": "Lago Atitlán"
+      }
+    ],
+    "web": ".././pages/lago_atitlan.html",
+    "location": "https://maps.app.goo.gl/q11YcJZqDR3aMrLi9",
+    "video": {
+      "id": "lago_atitlan_video_1",
+      "src": "../assets/lago_atitlan/lago_atitlan_video_1.mp4"
+    },
+    "text": "El Lago de Atitlán es uno de los destinos turísticos más populares de Guatemala. Rodeado de volcanes y pueblos indígenas, es conocido por su belleza escénica y su rica cultura."
+  },
+  {
+    "id": "laguna_brava",
+    "targetIndex": "targetIndex: 2",
+    "images": [
+      {
+        "id": "laguna_brava_2",
+        "src": "../assets/laguna_brava/laguna_brava_2.jpg",
+        "alt": "Laguna Brava"
+      },
+      {
+        "id": "laguna_brava_3",
+        "src": "../assets/laguna_brava/laguna_brava_3.jpg",
+        "alt": "Laguna Brava"
+      }
+    ],
+    "web": ".././pages/laguna_brava.html",
+    "location": "https://maps.app.goo.gl/VADAxpGbRCo23HX59",
+    "video": {
+      "id": "laguna_brava_video_1",
+      "src": "../assets/laguna_brava/laguna_brava_video_1.mp4"
+    },
+    "text": "La Laguna Brava es sin lugar a dudas una de las lagunas mas hermosas de Guatemala. Su agua color azul claro y sus montañas la convierten en un paraíso ubicado en Huehuetenango. Se encuentra cercana a la frontera con México y es un espacio natural en donde el reflejo del agua es impresionante. Para llegar debes caminar por un trayecto rodeado de bosque. Se recomienda llegar en un carro alto, por el camino de Nenton, Huehuetenango."
+  },
+  {
+    "id": "las_conchas",
+    "targetIndex": "targetIndex: 3",
+    "images": [
+      {
+        "id": "las_conchas_1",
+        "src": "../assets/las_conchas/las_conchas_1.jpg",
+        "alt": "Las Conchas"
+      },
+      {
+        "id": "las_conchas_2",
+        "src": "../assets/las_conchas/las_conchas_2.jpg",
+        "alt": "Las Conchas"
+      }
+    ],
+    "web": ".././pages/las_conchas.html",
+    "location": "https://maps.app.goo.gl/iVbpVUwMudpxWH5dA",
+    "video": {
+      "id": "las_conchas_video_1",
+      "src": "../assets/las_conchas/las_conchas_video_1.mp4"
+    },
+    "text": "Las Conchas es un parque natural ubicado en el departamento de Alta Verapaz, Guatemala. Es famoso por sus cascadas y pozas naturales, ideales para nadar y disfrutar de la naturaleza."
+  },
+  {
+    "id": "rio_dulce",
+    "targetIndex": "targetIndex: 4",
+    "images": [
+      {
+        "id": "rio_dulce_1",
+        "src": "../assets/rio_dulce/rio_dulce_1.jpg",
+        "alt": "Río Dulce"
+      },
+      {
+        "id": "rio_dulce_2",
+        "src": "../assets/rio_dulce/rio_dulce_2.jpg",
+        "alt": "Río Dulce"
+      }
+    ],
+    "web": ".././pages/rio_dulce.html",
+    "location": "https://maps.app.goo.gl/Q6NpatxppFg91zrU6",
+    "video": {
+      "id": "rio_dulce_video_1",
+      "src": "../assets/rio_dulce/rio_dulce_video_1.mp4"
+    },
+    "text": "El Río Dulce es un río en el departamento de Izabal, Guatemala. Es conocido por su biodiversidad y sus paisajes impresionantes, incluyendo el Castillo de San Felipe y el Lago de Izabal."
+  },
+  {
+    "id": "semuc_champey",
+    "targetIndex": "targetIndex: 5",
+    "images": [
+      {
+        "id": "semuc_champey_1",
+        "src": "../assets/semuc_champey/semuc_champey_1.jpg",
+        "alt": "Semuc Champey"
+      },
+      {
+        "id": "semuc_champey_2",
+        "src": "../assets/semuc_champey/semuc_champey_2.jpg",
+        "alt": "Semuc Champey"
+      }
+    ],
+    "web": ".././pages/semuc_champey.html",
+    "location": "https://maps.app.goo.gl/omg94TB4VDew376YA",
+    "video": {
+      "id": "semuc_champey_video_1",
+      "src": "../assets/semuc_champey/semuc_champey_video_1.mp4"
+    },
+    "text": "Semuc Champey es un monumento natural en el departamento de Alta Verapaz, Guatemala. Es famoso por sus pozas de agua turquesa y su puente de piedra natural sobre el río Cahabón."
+  },
+  {
+    "id": "tikal",
+    "targetIndex": "targetIndex: 6",
+    "images": [
+      {
+        "id": "tikal_1",
+        "src": "../assets/tikal/tikal_1.jpg",
+        "alt": "Tikal"
+      },
+      {
+        "id": "tikal_2",
+        "src": "../assets/tikal/tikal_2.jpg",
+        "alt": "Tikal"
+      }
+    ],
+    "web": ".././pages/tikal.html",
+    "location": "https://maps.app.goo.gl/Sm6nqdVh8nZppeJW8",
+    "video": {
+      "id": "tikal_video_1",
+      "src": "../assets/tikal/tikal_video_1.mp4"
+    },
+    "text": "Tikal es uno de los sitios arqueológicos más importantes de la civilización maya, ubicado en el departamento de Petén, Guatemala. Es conocido por sus impresionantes templos y su rica historia."
+  }
+]
+
+
+
