@@ -168,7 +168,7 @@
       { "id": "chichen_itza_2", "src": "../assets/chichen_itza/chichen_itza_3.jpg", "alt": "Chichen Itza" }
     ],
     "web": ".././pages/chichen_itza.html",
-    "location": "https://maps.app.goo.gl/xyz123",
+    "location": "https://maps.app.goo.gl/VDLtny8AKGGCDg4M6",
     "video": { "id": "chichen_itza_video_1", "src": "../assets/chichen_itza/chichen_itza_video_1.mp4" },
     "text": "Chichen Itza is a large pre-Columbian archaeological site built by the Maya civilization located in the Yucatan Peninsula, Mexico."
   },
@@ -180,7 +180,7 @@
       { "id": "coliseo_romano_2", "src": "../assets/coliseo_romano/coliseo_romano_3.jpg", "alt": "Coliseo Romano" }
     ],
     "web": ".././pages/coliseo_romano.html",
-    "location": "https://maps.app.goo.gl/def789",
+    "location": "https://maps.app.goo.gl/4dtVCtZfsskXqURr6",
     "video": { "id": "coliseo_romano_video_1", "src": "../assets/coliseo_romano/coliseo_romano_video_1.mp4" },
     "text": "The Roman Colosseum is an ancient amphitheater in Rome, Italy, known for its historical significance and architectural grandeur."
   },
@@ -192,7 +192,7 @@
       { "id": "cristo_redentor_2", "src": "../assets/cristo_redentor/cristo_redentor_3.jpg", "alt": "Cristo Redentor" }
     ],
     "web": ".././pages/cristo_redentor.html",
-    "location": "https://maps.app.goo.gl/abc456",
+    "location": "https://maps.app.goo.gl/8FmdGUrBiJXwHFF46",
     "video": { "id": "cristo_redentor_video_1", "src": "../assets/cristo_redentor/cristo_redentor_video_1.mp4" },
     "text": "Cristo Redentor is an iconic statue of Jesus Christ in Rio de Janeiro, Brazil, known for its panoramic views and cultural significance."
   },
@@ -204,7 +204,7 @@
       { "id": "machu_picchu_2", "src": "../assets/machu_picchu/machu_picchu_3.jpg", "alt": "Machu Picchu" }
     ],
     "web": ".././pages/machu_picchu.html",
-    "location": "https://maps.app.goo.gl/ghi012",
+    "location": "https://maps.app.goo.gl/yZY6vLCDTxjhUSmGA",
     "video": { "id": "machu_picchu_video_1", "src": "../assets/machu_picchu/machu_picchu_video_1.mp4" },
     "text": "Machu Picchu is an ancient Incan city located in the Andes Mountains of Peru, renowned for its archaeological significance and stunning views."
   },
@@ -216,7 +216,7 @@
       { "id": "muralla_china_2", "src": "../assets/muralla_china/muralla_china_3.jpg", "alt": "Muralla China" }
     ],
     "web": ".././pages/muralla_china.html",
-    "location": "https://maps.app.goo.gl/jkl345",
+    "location": "https://maps.app.goo.gl/TeQnD7QNrbY2pi2y5",
     "video": { "id": "muralla_china_video_1", "src": "../assets/muralla_china/muralla_china_video_1.mp4" },
     "text": "The Great Wall of China is a series of fortifications made of stone, brick, and other materials, built along the northern borders of China."
   },
@@ -228,7 +228,7 @@
       { "id": "petra_2", "src": "../assets/petra/petra_3.jpg", "alt": "Petra" }
     ],
     "web": ".././pages/petra.html",
-    "location": "https://maps.app.goo.gl/mno678",
+    "location": "https://maps.app.goo.gl/fuzKdkQavDvB16ZA9",
     "video": { "id": "petra_video_1", "src": "../assets/petra/petra_video_1.mp4" },
     "text": "Petra is a historical and archaeological city in southern Jordan, famous for its rock-cut architecture and water conduit system."
   },
@@ -240,7 +240,7 @@
       { "id": "taj_mahal_2", "src": "../assets/taj_mahal/taj_mahal_3.jpg", "alt": "Taj Mahal" }
     ],
     "web": ".././pages/taj_mahal.html",
-    "location": "https://maps.app.goo.gl/omg94TB4VDew376YA",
+    "location": "https://maps.app.goo.gl/67pHVnpepqTwaygaA",
     "video": { "id": "taj_mahal_video_1", "src": "../assets/taj_mahal/taj_mahal_video_1.mp4" },
     "text": "The Taj Mahal is an ivory-white marble mausoleum in Agra, India, built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal."
   }
