@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Las 7 Maravillas de Guatemala</title>
+    <title>Maravillas de Guatemala y el Mundo</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -14,20 +14,34 @@
 <body>
     <div class="header">
         <h1><i class="fas fa-camera"></i> TurisAR</h1>
-        <h2>Las 7 Maravillas de Guatemala</h2>
+        <h2>Maravillas de Guatemala y el Mundo</h2>
     </div>
 
     <div class="ar-container">
         <a-scene class="ar-scene" mindar-image="imageTargetSrc: ./7_maravillas_gt.mind;" vr-mode-ui="enabled: false"
             device-orientation-permission-ui="enabled: false">
+
             <a-assets>
-                <img id="cenotes" src="../assets/cenotes/cenotes_candelaria_1.jpg" alt="Cenotes de Candelaria">
-                <img id="lago_atitlan" src="../assets/lago_atitlan/lago_atitlan_1.jpg" alt="Lago de Atitlán">
-                <img id="laguna_brava" src="../assets/laguna_brava/laguna_brava_1.jpg" alt="Laguna Brava">
-                <img id="las_conchas" src="../assets/las_conchas/las_conchas_1.jpg" alt="Las Conchas">
-                <img id="rio_dulce" src="../assets/rio_dulce/rio_dulce_1.jpg" alt="Río Dulce">
-                <img id="semuc_champey" src="../assets/semuc_champey/semuc_champey_1.jpg" alt="Semuc Champey">
-                <img id="tikal" src="../assets/tikal/tikal_1.jpg" alt="Ruinas de Tikal">
+                <img id="icon-web" src="../assets/icons/btn_web.png" alt="Web">
+                <img id="icon-location" src="../assets/icons/btn_map.png" alt="Location">
+                <img id="icon-play" src="../assets/icons/btn_play.png" alt="Play">
+                <img id="icon-pause" src="../assets/icons/btn_pause.png" alt="Pause">
+            </a-assets>
+
+            <a-assets>
+                <img id="cenotes" src="../assets/cenotes/cenotes_candelaria_2.jpg" alt="Cenotes de Candelaria">
+                <img id="lago_atitlan" src="../assets/lago_atitlan/lago_atitlan_2.jpg" alt="Lago de Atitlán">
+                <img id="laguna_brava" src="../assets/laguna_brava/laguna_brava_2.jpg" alt="Laguna Brava">
+                <img id="las_conchas" src="../assets/las_conchas/las_conchas_2.jpg" alt="Las Conchas">
+                <img id="rio_dulce" src="../assets/rio_dulce/rio_dulce_2.jpg" alt="Río Dulce">
+                <img id="semuc_champey" src="../assets/semuc_champey/semuc_champey_2.jpg" alt="Semuc Champey">
+                <img id="tikal" src="../assets/tikal/tikal_2.jpg" alt="Ruinas de Tikal">
+            </a-assets>
+
+            <a-assets>
+                <img id="laguna_brava_2" src="../assets/laguna_brava/laguna_brava_2.jpg" alt="Laguna Brava">
+                <img id="laguna_brava_3" src="../assets/laguna_brava/laguna_brava_3.jpg" alt="Laguna Brava">
+                <video id="laguna_brava_video_1" autoplay="false" loop="false" src="../assets/laguna_brava/laguna_brava_video_1.mp4"></video>
             </a-assets>
 
             <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
@@ -45,7 +59,41 @@
 
             <a-entity id="entity-laguna_brava" mindar-image-target="targetIndex: 2">
                 <a-plane id="plane-laguna_brava" class="clickable" src="#laguna_brava" position="0 0 0" width="1"
-                    height="0.75" rotation="0 0 0"></a-plane>
+                    height="1" rotation="0 0 0"></a-plane>
+
+                <a-entity visible=false id="panel-laguna_brava" position="0 0 0">
+
+                    <a-image visible=true id="web-button-laguna_brava" class="clickable" src="#icon-web" alpha-test="0.5"
+                        position="-0.8 0.4 0" height="0.15" width="0.15"
+                        animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+                    <a-image visible=true id="location-button-laguna_brava" class="clickable" src="#icon-location"
+                        position="-0.8 0.2 0" height="0.15" width="0.15"
+                        animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+                    <a-image visible=true id="play-button-laguna_brava" class="clickable" src="#icon-play"
+                             position="-0.8 0 0" height="0.15" width="0.15"
+                             animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+                    <a-image visible=true id="pause-button-laguna_brava" class="clickable" src="#icon-pause"
+                             position="-0.8 -0.2 0" height="0.15" width="0.15"
+                             animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"></a-image>
+
+                    <a-video id="laguna_brava_video_1" webkit-playsinline playsinline src="#laguna_brava_video_1"
+                             position="0 0 0" width="1" height="1"></a-video>
+
+                    <a-image id="laguna_brava_2" src="#laguna_brava_2" position="-0.3 0.8 0" width="0.5"
+                        height="0.5"></a-image>
+                    <a-image id="laguna_brava_3" src="#laguna_brava_3" position="0.3 0.8 0" width="0.5"
+                        height="0.5"></a-image>
+
+                    <a-text value="La Laguna Brava es sin lugar a dudas una de las lagunas más hermosas de Guatemala. Su agua color azul
+                        claro y sus montañas la convierten en un paraíso ubicado en Huehuetenango. Se encuentra cercana a la
+                        frontera con México y es un espacio natural en donde el reflejo del agua es impresionante. Para llegar
+                        debes caminar por un trayecto rodeado de bosque. Se recomienda llegar en un carro alto, por el camino de
+                        Nenton, Huehuetenango." color="white" align="center" anchor="center" width="1" height="1"
+                            position="0 -0.8 0.5" font-weight="bold" font-size="50"></a-text>
+                </a-entity>
             </a-entity>
 
             <a-entity id="entity-las_conchas" mindar-image-target="targetIndex: 3">
@@ -77,6 +125,18 @@
 
     <div class="loading">
         <p><i class="fas fa-spinner fa-spin"></i> Cargando experiencia AR...</p>
+    </div>
+
+    <div id="buttons">
+        <button id="playButton">
+            Play
+        </button>
+        <button id="pauseButton">
+            Pause
+        </button>
+        <button id="stopButton">
+            Stop
+        </button>
     </div>
 
     <script src="script.js"></script>
