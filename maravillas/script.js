@@ -1,31 +1,100 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const loading = document.querySelector('.loading');
-    loading.classList.add('active');
+function contentLoaded() {
+    document.addEventListener('DOMContentLoaded', function () {
+        const loading = document.querySelector('.loading');
+        loading.classList.add('active');
 
-    const sceneEl = document.querySelector('a-scene');
-    sceneEl.addEventListener('loaded', function () {
-        loading.classList.remove('active');
-    });
+        // const sceneEl = document.querySelector('a-scene');
+        const sceneEl = document.querySelector('a-scene');
+        sceneEl.addEventListener('loaded', function () {
+            loading.classList.remove('active');
+        });
 
-    sceneEl.addEventListener('arError', function (ev) {
-        loading.classList.remove('active');
-        alert('Lo sentimos, hubo un error al iniciar la experiencia AR. Por favor, asegúrate de dar permiso a la cámara y refresca la página.');
-    });
+        sceneEl.addEventListener('arError', function (ev) {
+            loading.classList.remove('active');
+            alert('Lo sentimos, hubo un error al iniciar la experiencia AR. Por favor, asegúrate de dar permiso a la cámara y refresca la página.');
+        });
 
-    sceneEl.addEventListener("arReady", (event) => {
-        console.log("MindAR is ready")
+        sceneEl.addEventListener("arReady", (event) => {
+            console.log("MindAR is ready")
+        });
+        // arError event triggered when something went wrong. Mostly browser compatbility issue
+        sceneEl.addEventListener("arError", (event) => {
+            console.log("MindAR failed to start")
+        });
     });
-    // arError event triggered when something went wrong. Mostly browser compatbility issue
-    sceneEl.addEventListener("arError", (event) => {
-        console.log("MindAR failed to start")
-    });
-});
+}
+
+
 
 fetch('data.json')
     .then(response => response.json())
     .then(data => {
-        const assetsContainer = document.querySelector('a-assets');
-        const sceneContainer = document.querySelector('a-scene');
+        // const assetsContainer = document.querySelector('a-assets');
+        // const sceneContainer = document.querySelector('a-scene');
+        // sceneContainer.setAttribute('mindar-image', 'imageTargetSrc: ./assets/targets.mind;');
+        // const normalScene = document.querySelector('#id_normal_scene');
+        const arContainer = document.querySelector('#id_ar_container');
+        const assetsContainer = document.createElement('a-assets');
+        const acamera = document.createElement('a-camera');
+        acamera.setAttribute('position', '0 0 0');
+        acamera.setAttribute('look-controls', 'enabled: false');
+        acamera.setAttribute('cursor', 'fuse: false; rayOrigin: mouse;');
+        acamera.setAttribute('raycaster', 'near: 10; far: 10000; objects: .clickable');
+        assetsContainer.appendChild(acamera);
+        let assetsList = [{id: 'icon-web', src: '../assets/icons/btn_web.png', alt: 'Web'},
+            {id: 'icon-location', src: '../assets/icons/btn_map.png', alt: 'Location'},
+            {id: 'icon-play', src: '../assets/icons/btn_play.png', alt: 'Play'},
+            {id: 'icon-pause', src: '../assets/icons/btn_pause.png', alt: 'Pause'}];
+
+        assetsList.forEach(asset => {
+            const img = document.createElement('img');
+            img.id = asset.id;
+            img.src = asset.src;
+            img.alt = asset.alt;
+            assetsContainer.appendChild(img);
+        });
+        acamera.setAttribute('position', '0 0 0');
+        acamera.setAttribute('look-controls', 'enabled: false');
+        acamera.setAttribute('cursor', 'fuse: false; rayOrigin: mouse;');
+        acamera.setAttribute('raycaster', 'near: 10; far: 10000; objects: .clickable');
+
+
+        // // const assetsContainer = document.querySelector('a-assets');
+        // // const sceneContainer = document.querySelector('a-scene');
+
+        const sceneContainer = document.createElement('a-scene');
+        sceneContainer.appendChild(assetsContainer);
+        sceneContainer.appendChild(acamera);
+
+        let customMind = JSON.parse(localStorage.getItem("customMind"));
+        if (customMind) {
+            console.log("customMind: ", customMind);
+            console.log("Setting mindar-image attribute to: ", customMind.web);
+            sceneContainer.setAttribute('class', 'ar-scene');
+            sceneContainer.setAttribute('mindar-image', `imageTargetSrc: ${customMind.web};`);
+            sceneContainer.setAttribute('vr-mode-ui', 'enabled: false');
+            sceneContainer.setAttribute('device-orientation-permission-ui', 'enabled: false');
+            sceneContainer.setAttribute('id', 'custom_scene');
+            // normalScene.setAttribute('mindar-image', `imageTargetSrc: ${customMind.web}`);
+            // sceneContainer.addEventListener('loaded', function () {
+            //     loading.classList.remove('active');
+            // });
+
+            sceneContainer.addEventListener('arError', function (ev) {
+                // loading.classList.remove('active');
+                alert('Lo sentimos, hubo un error al iniciar la experiencia AR. Por favor, asegúrate de dar permiso a la cámara y refresca la página.');
+            });
+
+            sceneContainer.addEventListener("arReady", (event) => {
+                console.log("MindAR is ready")
+            });
+            // arError event triggered when something went wrong. Mostly browser compatbility issue
+            sceneContainer.addEventListener("arError", (event) => {
+                console.log("MindAR failed to start")
+            });
+
+            arContainer.appendChild(sceneContainer);
+        }
 
         data.forEach(item => {
             // Crear elementos de assets
@@ -121,6 +190,7 @@ fetch('data.json')
             sceneContainer.appendChild(entity);
 
             setupEntityEvents(item);
+            // contentLoaded();
 
             // // document.addEventListener('DOMContentLoaded', function () {
             //     /*const loading = document.querySelector('.loading');

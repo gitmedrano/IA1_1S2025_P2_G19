@@ -315,6 +315,9 @@
                 }, {});
                 console.log(`Archivos agrupados para ${Object.keys(groupedMedia).length} grupos.`);
 
+                //Objeto para el custom mind
+                const customMind = {};
+
                 const finalJsonArray = [];
                 let imageCounter = 1;
 
@@ -352,10 +355,12 @@
                                 groupJsonObject.video = { id: videoId, src: videoSrc };
                             } else if(media.type.startsWith('mind')) {
                                 console.log(`media.type no es video ni imagen: ${media.type}`);
-                                groupJsonObject.web = URL.createObjectURL(media.file);
+                                // groupJsonObject.web = URL.createObjectURL(media.file);
                             }
                         });
-
+                        if(groupJsonObject.id === "custom_mind") {
+                            localStorage.setItem('customMind', JSON.stringify(groupJsonObject));
+                        }
                         finalJsonArray.push(groupJsonObject);
                     }
                 } // Fin for...in
