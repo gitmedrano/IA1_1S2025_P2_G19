@@ -20,7 +20,7 @@
     const loadAllButton = document.getElementById('loadAllButton'); // Renombrado
     const feedbackDiv = document.getElementById('feedback');
     const mediaDisplayDiv = document.getElementById('mediaDisplay');
-
+    const exportJsonButton = document.getElementById('exportJsonButton');
     // --- Funciones de Base de Datos ---
 
     function openDB() {
@@ -243,8 +243,145 @@
         };
     }
 
-    // --- Manejadores de Eventos ---
+    // --- NUEVA FUNCIÓN: Generar y Guardar JSON ---
+    function generateAndSaveJson() {
+        if (!db) {
+            showFeedback("La base de datos no está lista para exportar.", true);
+            return;
+        }
+        showFeedback("Iniciando exportación a JSON...", false);
 
+        const transaction = db.transaction([STORE_NAME], 'readonly');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.getAll(); // Obtener todos los registros
+
+        request.onerror = (event) => {
+            console.error("Error al obtener todos los medios para exportar:", event.target.error);
+            showFeedback("Error al leer datos para exportar JSON.", true);
+        };
+
+        request.onsuccess = (event) => {
+            const allMedia = event.target.result;
+            if (!allMedia || allMedia.length === 0) {
+                showFeedback("No hay medios en IndexedDB para exportar.", false);
+                return;
+            }
+
+            console.log(`Procesando ${allMedia.length} registros para JSON...`);
+
+            // Paso 1: Agrupar medios por 'group'
+            const groupedMedia = allMedia.reduce((acc, media) => {
+                const group = media.group;
+                if (!acc[group]) {
+                    acc[group] = []; // Crear array para este grupo si no existe
+                }
+                acc[group].push(media); // Añadir el medio al array de su grupo
+                return acc;
+            }, {}); // El acumulador inicial es un objeto vacío
+
+            console.log(`Encontrados ${Object.keys(groupedMedia).length} grupos únicos.`);
+
+            // Paso 2: Procesar cada grupo para generar la estructura JSON deseada
+            const finalJsonArray = [];
+            let imageCounter = 1; // Para generar IDs únicos de imagen dentro de un grupo
+
+            for (const groupPrefix in groupedMedia) {
+                if (groupedMedia.hasOwnProperty(groupPrefix)) {
+                    const mediaInGroup = groupedMedia[groupPrefix];
+                    imageCounter = 1; // Reiniciar contador para cada grupo
+
+                    // Formatear nombre del grupo para 'alt' y placeholders
+                    const formattedGroupName = formatGroupNameForDisplay(groupPrefix);
+
+                    const groupJsonObject = {
+                        id: groupPrefix, // Usar el prefijo del grupo como ID principal
+                        targetIndex: "targetIndex: 0", // Valor fijo según tu estructura
+                        images: [],
+                        // Ruta web hipotética
+                        web: `.././pages/${groupPrefix}.html`,
+                        // Location fija según tu estructura
+                        location: "https://maps.app.goo.gl/mM8dMYTouK4HM7Z67",
+                        video: null, // Inicializar video como null
+                        // Texto de marcador de posición
+                        text: `Descripción para ${formattedGroupName}. Esta información debe ser añadida manualmente.`
+                    };
+
+                    // Iterar sobre los medios DENTRO de este grupo específico
+                    mediaInGroup.forEach(media => {
+                        // Si es imagen, añadir al array 'images'
+                        if (media.type.startsWith('image/')) {
+                            const imageId = `${groupPrefix}_${imageCounter++}`;
+                            // Ruta src hipotética
+                            const imageSrc = `../assets/${groupPrefix}/${media.name}`;
+
+                            groupJsonObject.images.push({
+                                id: imageId,
+                                src: imageSrc,
+                                alt: formattedGroupName // Usar nombre de grupo formateado como alt
+                            });
+                        }
+                        // Si es video Y aún no hemos añadido uno para este grupo
+                        else if (media.type.startsWith('video/') && groupJsonObject.video === null) {
+                            const videoId = `${groupPrefix}_video_1`;
+                            // Ruta src hipotética
+                            const videoSrc = `../assets/${groupPrefix}/${media.name}`;
+
+                            groupJsonObject.video = {
+                                id: videoId,
+                                src: videoSrc
+                            };
+                        }
+                    }); // Fin forEach mediaInGroup
+
+                    finalJsonArray.push(groupJsonObject);
+                } // Fin hasOwnProperty check
+            } // Fin for...in groupedMedia
+
+            // Paso 3: Guardar en Local Storage
+            try {
+                const jsonString = JSON.stringify(finalJsonArray, null, 2); // null, 2 para indentación bonita
+                localStorage.setItem('mediaGroupsJson', jsonString);
+                console.log("JSON generado y guardado en Local Storage ('mediaGroupsJson').");
+                console.log(jsonString); // Mostrar en consola para verificación
+                showFeedback(`JSON generado para ${finalJsonArray.length} grupos y guardado en Local Storage.`, false);
+
+                // Opcional: Ofrecer descarga del JSON
+                // offerJsonDownload(jsonString, 'media_groups_export.json');
+
+            } catch (error) {
+                console.error("Error al convertir a JSON o guardar en Local Storage:", error);
+                showFeedback("Error al generar o guardar el JSON.", true);
+                if (error.name === 'QuotaExceededError') {
+                    alert("Error: El JSON generado es demasiado grande para guardarlo en Local Storage. Revisa la consola para ver el JSON.");
+                }
+            }
+        }; // Fin request.onsuccess
+    }
+
+    // --- NUEVA FUNCIÓN Auxiliar: Formatear nombre de grupo ---
+    function formatGroupNameForDisplay(prefix) {
+        if (!prefix) return "Grupo Desconocido";
+        // Reemplaza guiones bajos por espacios y capitaliza cada palabra
+        return prefix.replace(/_/g, ' ')
+            .replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    // --- NUEVA FUNCIÓN Opcional: Ofrecer descarga del JSON ---
+    function offerJsonDownload(jsonString, filename) {
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a); // Necesario para Firefox
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url); // Liberar memoria
+        console.log(`Ofreciendo descarga del archivo: ${filename}`);
+    }
+
+    // --- Manejadores de Eventos ---
+    exportJsonButton.addEventListener('click', generateAndSaveJson);
     saveButton.addEventListener('click', saveMedia);
     loadAllButton.addEventListener('click', displayAllMedia); // Botón para cargar todo
     // --- NUEVO: Event listener para cargar por grupo ---
