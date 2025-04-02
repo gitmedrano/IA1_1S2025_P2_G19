@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndexedDB Media Storage con Grupos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Guardar Imágenes y Videos con IndexedDB (por Grupo)</h1>
+
+<div class="controls">
+    <h2>Guardar Medios</h2>
+    <label for="groupPrefixInput">Prefijo/Nombre del Grupo:</label>
+    <input type="text" id="groupPrefixInput" placeholder="Ej: Viaje_Playa_2025" required>
+
+    <label for="mediaInput">Selecciona imágenes o videos:</label>
+    <input type="file" id="mediaInput" accept="image/*,video/*" multiple>
+
+    <button id="saveButton">Guardar en Grupo</button>
+</div>
+
+<div id="feedback"></div>
+
+<div class="controls">
+    <h2>Medios Guardados Localmente</h2>
+    <label for="loadGroupInput">Ver Grupo Específico:</label>
+    <input type="text" id="loadGroupInput" placeholder="Escribe el prefijo del grupo">
+    <button id="loadGroupButton">Cargar Grupo</button>
+    <hr>
+    <button id="loadAllButton">Cargar Todos los Medios</button>
+</div>
+
+<div id="mediaDisplay">
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
