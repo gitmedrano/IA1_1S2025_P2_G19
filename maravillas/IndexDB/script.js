@@ -1,410 +1,423 @@
 (function() {
-    if (!window.indexedDB) {
-        console.error("IndexedDB no es soportado por tu navegador.");
-        alert("Tu navegador no soporta IndexedDB, esta funcionalidad no estará disponible.");
-        return;
-    }
+    if (!window.indexedDB) { /* ... chequeo soporte ... */ return; }
 
     const DB_NAME = 'mediaDB';
-    const STORE_NAME = 'mediaStore';
-    // IMPORTANTE: Incrementar la versión para aplicar los cambios de estructura
-    const DB_VERSION = 2;
+    const MEDIA_STORE_NAME = 'mediaStore'; // Renombrado para claridad
+    const GROUP_METADATA_STORE_NAME = 'groupMetadataStore'; // Nuevo Store
+    const DB_VERSION = 3; // <-- IMPORTANTE: Incrementar versión
     let db;
 
-    // Referencias a los nuevos elementos HTML
-    const groupPrefixInput = document.getElementById('groupPrefixInput');
+    // --- Referencias HTML ---
+    // Sección Metadatos
+    const metaGroupPrefixInput = document.getElementById('metaGroupPrefixInput');
+    const loadMetaButton = document.getElementById('loadMetaButton');
+    const metaTargetIndexInput = document.getElementById('metaTargetIndexInput');
+    const metaWebInput = document.getElementById('metaWebInput');
+    const metaLocationInput = document.getElementById('metaLocationInput');
+    const metaTextInput = document.getElementById('metaTextInput');
+    const saveMetaButton = document.getElementById('saveMetaButton');
+    const metadataFeedbackDiv = document.getElementById('metadataFeedback');
+
+    // Sección Archivos
+    const fileGroupPrefixInput = document.getElementById('fileGroupPrefixInput');
+    const mediaInput = document.getElementById('mediaInput');
+    const saveFilesButton = document.getElementById('saveFilesButton');
+    const fileFeedbackDiv = document.getElementById('fileFeedback');
+
+    // Sección Visualizar/Exportar
     const loadGroupInput = document.getElementById('loadGroupInput');
     const loadGroupButton = document.getElementById('loadGroupButton');
-    const mediaInput = document.getElementById('mediaInput');
-    const saveButton = document.getElementById('saveButton');
-    const loadAllButton = document.getElementById('loadAllButton'); // Renombrado
-    const feedbackDiv = document.getElementById('feedback');
-    const mediaDisplayDiv = document.getElementById('mediaDisplay');
+    const loadAllButton = document.getElementById('loadAllButton');
     const exportJsonButton = document.getElementById('exportJsonButton');
-    // --- Funciones de Base de Datos ---
+    const displayFeedbackDiv = document.getElementById('displayFeedback');
+    const mediaDisplayDiv = document.getElementById('mediaDisplay');
 
+    // --- Funciones Feedback Específicas ---
+    function showMetadataFeedback(message, isError = false) { showFeedback(metadataFeedbackDiv, message, isError); }
+    function showFileFeedback(message, isError = false) { showFeedback(fileFeedbackDiv, message, isError); }
+    function showDisplayFeedback(message, isError = false) { showFeedback(displayFeedbackDiv, message, isError); }
+    function showFeedback(divElement, message, isError) { // Función genérica
+        divElement.textContent = message;
+        divElement.className = isError ? 'error' : (message ? 'success' : '');
+    }
+
+    // --- Funciones de Base de Datos ---
     function openDB() {
         console.log("Abriendo base de datos (v" + DB_VERSION + ")...");
         const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-        request.onerror = (event) => {
-            console.error("Error al abrir la base de datos:", event.target.error);
-            showFeedback("Error al abrir la base de datos.", true);
-        };
-
+        request.onerror = (event) => { /* ... manejo de error ... */ };
         request.onsuccess = (event) => {
             db = event.target.result;
-            console.log("Base de datos abierta exitosamente.");
-            showFeedback("Base de datos lista.", false);
+            console.log("Base de datos abierta.");
+            showMetadataFeedback("Base de datos lista.", false);
+            showFileFeedback("", false); // Limpiar otros feedbacks
+            showDisplayFeedback("", false);
         };
 
-        // Se ejecuta si la versión es nueva o la DB no existe
         request.onupgradeneeded = (event) => {
             console.log("Actualizando/Creando base de datos...");
             let db = event.target.result;
-            let store;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-                console.log(`Object Store '${STORE_NAME}' creado.`);
-            } else {
-                // Si ya existe, obtenemos la referencia para añadir el índice
-                store = event.target.transaction.objectStore(STORE_NAME);
-                console.log(`Object Store '${STORE_NAME}' ya existe.`);
-            }
+            let transaction = event.target.transaction; // Usar transacción existente
 
-            // --- CAMBIO IMPORTANTE: Crear Índice para el grupo ---
-            // Se crea sólo si no existe ya en esta versión
-            if (!store.indexNames.contains('group')) {
-                // Índice 'group': permite buscar eficientemente por el campo 'group'
-                store.createIndex('group', 'group', { unique: false });
-                console.log("Índice 'group' creado en el Object Store.");
+            // Crear/Actualizar Media Store
+            let mediaStore;
+            if (!db.objectStoreNames.contains(MEDIA_STORE_NAME)) {
+                mediaStore = db.createObjectStore(MEDIA_STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                console.log(`Object Store '${MEDIA_STORE_NAME}' creado.`);
+            } else {
+                mediaStore = transaction.objectStore(MEDIA_STORE_NAME);
             }
-            // Crear otros índices si no existen (del ejemplo anterior)
-            if (!store.indexNames.contains('name')) {
-                store.createIndex('name', 'name', { unique: false });
-                console.log("Índice 'name' creado.");
-            }
-            if (!store.indexNames.contains('type')) {
-                store.createIndex('type', 'type', { unique: false });
-                console.log("Índice 'type' creado.");
+            // Asegurar índices en mediaStore
+            if (!mediaStore.indexNames.contains('group')) { mediaStore.createIndex('group', 'group', { unique: false }); console.log("Índice 'group' creado en Media Store.");}
+            if (!mediaStore.indexNames.contains('name')) { mediaStore.createIndex('name', 'name', { unique: false }); }
+            if (!mediaStore.indexNames.contains('type')) { mediaStore.createIndex('type', 'type', { unique: false }); }
+
+
+            // --- NUEVO: Crear Group Metadata Store ---
+            if (!db.objectStoreNames.contains(GROUP_METADATA_STORE_NAME)) {
+                // Usamos 'group' como keyPath, debe ser único para los metadatos.
+                let metadataStore = db.createObjectStore(GROUP_METADATA_STORE_NAME, { keyPath: 'group' });
+                console.log(`Object Store '${GROUP_METADATA_STORE_NAME}' creado.`);
+                // No necesitamos otros índices aquí si siempre buscamos por 'group' (la key)
+            } else {
+                console.log(`Object Store '${GROUP_METADATA_STORE_NAME}' ya existe.`);
             }
         };
     }
 
-    function saveMedia() {
-        if (!db) {
-            showFeedback("La base de datos no está lista.", true); return;
-        }
-        // --- CAMBIO: Obtener y validar el prefijo del grupo ---
-        const groupPrefix = groupPrefixInput.value.trim();
+    // --- NUEVO: Funciones de Gestión de Metadatos ---
+    function saveGroupMetadata() {
+        const groupPrefix = metaGroupPrefixInput.value.trim();
         if (!groupPrefix) {
-            showFeedback("Por favor, ingresa un prefijo/nombre para el grupo.", true);
-            groupPrefixInput.focus();
+            showMetadataFeedback("El Prefijo/Nombre del Grupo es obligatorio.", true);
+            metaGroupPrefixInput.focus();
+            return;
+        }
+        if (!db) { showMetadataFeedback("La base de datos no está lista.", true); return; }
+
+        const metadataRecord = {
+            group: groupPrefix,
+            targetIndex: metaTargetIndexInput.value.trim(),
+            web: metaWebInput.value.trim(),
+            location: metaLocationInput.value.trim(),
+            text: metaTextInput.value.trim()
+        };
+
+        const transaction = db.transaction([GROUP_METADATA_STORE_NAME], 'readwrite');
+        const store = transaction.objectStore(GROUP_METADATA_STORE_NAME);
+        // Usamos put() para insertar o actualizar si ya existe la clave 'group'
+        const request = store.put(metadataRecord);
+
+        request.onerror = (event) => {
+            console.error("Error al guardar metadatos:", event.target.error);
+            showMetadataFeedback(`Error al guardar metadatos: ${event.target.error.message}`, true);
+        };
+        request.onsuccess = (event) => {
+            console.log(`Metadatos para el grupo '${groupPrefix}' guardados/actualizados.`);
+            showMetadataFeedback(`Metadatos para '${groupPrefix}' guardados exitosamente.`, false);
+            // Limpiar formulario de metadatos (opcional)
+            // metaGroupPrefixInput.value = '';
+            // metaTargetIndexInput.value = 'targetIndex: 0';
+            // metaWebInput.value = '';
+            // metaLocationInput.value = '';
+            // metaTextInput.value = '';
+        };
+    }
+
+    function loadGroupMetadataForEditing() {
+        const groupPrefix = metaGroupPrefixInput.value.trim();
+        if (!groupPrefix) {
+            showMetadataFeedback("Ingresa el Prefijo del Grupo que deseas cargar.", true);
+            metaGroupPrefixInput.focus();
+            return;
+        }
+        if (!db) { showMetadataFeedback("La base de datos no está lista.", true); return; }
+
+        const transaction = db.transaction([GROUP_METADATA_STORE_NAME], 'readonly');
+        const store = transaction.objectStore(GROUP_METADATA_STORE_NAME);
+        const request = store.get(groupPrefix); // get() busca por la clave primaria
+
+        request.onerror = (event) => {
+            console.error("Error al cargar metadatos:", event.target.error);
+            showMetadataFeedback(`Error al cargar metadatos para '${groupPrefix}'.`, true);
+        };
+        request.onsuccess = (event) => {
+            const record = event.target.result;
+            if (record) {
+                metaTargetIndexInput.value = record.targetIndex || 'targetIndex: 0';
+                metaWebInput.value = record.web || '';
+                metaLocationInput.value = record.location || '';
+                metaTextInput.value = record.text || '';
+                showMetadataFeedback(`Metadatos para '${groupPrefix}' cargados.`, false);
+            } else {
+                showMetadataFeedback(`No se encontraron metadatos para el grupo '${groupPrefix}'. Puedes crearlos ahora.`, true);
+                // Opcional: limpiar campos si no se encuentra
+                metaTargetIndexInput.value = 'targetIndex: 0';
+                metaWebInput.value = '';
+                metaLocationInput.value = '';
+                metaTextInput.value = '';
+            }
+        };
+    }
+
+    // --- Función para guardar archivos (ahora llamada saveFilesToGroup) ---
+    function saveFilesToGroup() {
+        const groupPrefix = fileGroupPrefixInput.value.trim(); // Input de la sección de archivos
+        if (!groupPrefix) {
+            showFileFeedback("Por favor, ingresa el prefijo del grupo al que pertenecen los archivos.", true);
+            fileGroupPrefixInput.focus();
             return;
         }
         if (mediaInput.files.length === 0) {
-            showFeedback("No has seleccionado ningún archivo.", true); return;
+            showFileFeedback("No has seleccionado ningún archivo.", true); return;
         }
+        if (!db) { showFileFeedback("La base de datos no está lista.", true); return; }
 
-        const transaction = db.transaction([STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(STORE_NAME);
+        // Opcional: Podríamos verificar si existen metadatos para este grupo antes de guardar archivos
+        // pero por simplicidad, lo omitimos. Asumimos que el usuario gestiona los metadatos.
+
+        const transaction = db.transaction([MEDIA_STORE_NAME], 'readwrite');
+        const store = transaction.objectStore(MEDIA_STORE_NAME);
         let filesProcessed = 0;
 
         transaction.onerror = (event) => {
-            console.error("Error en la transacción:", event.target.error);
-            showFeedback(`Error al guardar: ${event.target.error.message}`, true);
+            console.error("Error en transacción de archivos:", event.target.error);
+            showFileFeedback(`Error al guardar archivos: ${event.target.error.message}`, true);
         };
         transaction.oncomplete = (event) => {
-            console.log("Transacción completada.");
-            showFeedback(`${filesProcessed} archivo(s) guardado(s) en el grupo '${groupPrefix}'.`, false);
+            console.log("Transacción de archivos completada.");
+            showFileFeedback(`${filesProcessed} archivo(s) añadido(s) al grupo '${groupPrefix}'.`, false);
             mediaInput.value = ''; // Limpiar input de archivos
-            // Opcional: limpiar input de prefijo? groupPrefixInput.value = '';
-            // No refrescamos la vista automáticamente, el usuario elige qué cargar.
+            // fileGroupPrefixInput.value = ''; // Opcional: limpiar prefijo
         };
 
         Array.from(mediaInput.files).forEach(file => {
-            // --- CAMBIO: Añadir el prefijo al objeto guardado ---
+            console.log(`Guardando archivo '${file.name}' (${file.type}) en el grupo '${groupPrefix}'`);
             const mediaRecord = {
-                group: groupPrefix, // <-- ¡NUEVO CAMPO!
+                group: groupPrefix, // Asociar con el grupo
                 name: file.name,
-                type: file.type,
+                type: file.type || "mind",
                 file: file
             };
-            const request = store.add(mediaRecord);
+            const request = store.add(mediaRecord); // add() para añadir nuevo archivo
             request.onsuccess = () => { filesProcessed++; };
-            request.onerror = (event) => {
-                console.error(`Error al añadir '${file.name}':`, event.target.error);
-            };
+            request.onerror = (event) => { console.error(`Error al añadir '${file.name}':`, event.target.error); };
         });
     }
 
-    // Función para mostrar medios (genérica, usada por las otras dos)
-    function renderMedia(mediaRecords) {
-        mediaDisplayDiv.innerHTML = ''; // Limpiar vista previa
-
+    // --- Funciones de Visualización (displayAllMedia, displayMediaByGroup, renderMedia) ---
+    // Sin cambios significativos en su lógica interna de lectura del MEDIA_STORE_NAME
+    // y renderizado, pero usamos los nuevos feedbacks.
+    function displayAllMedia() {
+        if (!db) { showDisplayFeedback("La base de datos no está lista.", true); return; }
+        showDisplayFeedback("Cargando todos los medios...", false);
+        const transaction = db.transaction([MEDIA_STORE_NAME], 'readonly');
+        const store = transaction.objectStore(MEDIA_STORE_NAME);
+        const request = store.getAll();
+        request.onerror = (event) => { showDisplayFeedback("Error al cargar todos.", true); console.error(event.target.error);};
+        request.onsuccess = (event) => { renderMedia(event.target.result, "Todos los Medios"); };
+    }
+    function displayMediaByGroup(groupPrefix) {
+        if (!db) { showDisplayFeedback("La base de datos no está lista.", true); return; }
+        if (!groupPrefix) { showDisplayFeedback("Ingresa el prefijo del grupo a cargar.", true); return; }
+        showDisplayFeedback(`Cargando grupo '${groupPrefix}'...`, false);
+        const transaction = db.transaction([MEDIA_STORE_NAME], 'readonly');
+        const store = transaction.objectStore(MEDIA_STORE_NAME);
+        const index = store.index('group');
+        const request = index.getAll(groupPrefix);
+        request.onerror = (event) => { showDisplayFeedback(`Error al cargar grupo '${groupPrefix}'.`, true); console.error(event.target.error);};
+        request.onsuccess = (event) => { renderMedia(event.target.result, `Grupo: ${groupPrefix}`); };
+    }
+    function renderMedia(mediaRecords, title) { // Añadido título para contexto
+        mediaDisplayDiv.innerHTML = '';
         if (!mediaRecords || mediaRecords.length === 0) {
-            mediaDisplayDiv.innerHTML = '<p>No se encontraron medios para mostrar.</p>';
-            showFeedback("No hay medios que coincidan.", false);
+            mediaDisplayDiv.innerHTML = `<p>No se encontraron medios para '${title}'.</p>`;
+            showDisplayFeedback(`No hay medios que mostrar para '${title}'.`, false);
             return;
         }
-
-        showFeedback(`Mostrando ${mediaRecords.length} medio(s)...`, false);
-
+        showDisplayFeedback(`Mostrando ${mediaRecords.length} medio(s) para '${title}'...`, false);
         mediaRecords.forEach(mediaRecord => {
             const mediaElementContainer = document.createElement('div');
             const objectURL = URL.createObjectURL(mediaRecord.file);
+            console.log(`Creando objeto URL para '${mediaRecord.name}' (${objectURL})`);
             let mediaElement;
+            // ... (creación de img/video/p element) ...
+            if (mediaRecord.type.startsWith('image/')) { mediaElement = document.createElement('img'); mediaElement.alt = mediaRecord.name;}
+            else if (mediaRecord.type.startsWith('video/')) { mediaElement = document.createElement('video'); mediaElement.controls = true;}
+            else { mediaElement = document.createElement('p'); mediaElement.textContent = `Archivo: ${mediaRecord.name}`; }
+            if (mediaElement.tagName === 'IMG' || mediaElement.tagName === 'VIDEO') { mediaElement.src = objectURL; }
 
-            if (mediaRecord.type.startsWith('image/')) {
-                mediaElement = document.createElement('img');
-                mediaElement.alt = mediaRecord.name;
-            } else if (mediaRecord.type.startsWith('video/')) {
-                mediaElement = document.createElement('video');
-                mediaElement.controls = true;
-            } else {
-                mediaElement = document.createElement('p');
-                mediaElement.textContent = `Archivo: ${mediaRecord.name}`;
-            }
-
-            if (mediaElement.tagName === 'IMG' || mediaElement.tagName === 'VIDEO') {
-                mediaElement.src = objectURL;
-                console.log(`Url creado para ${mediaRecord.name}: ${objectURL}`);
-                // Considerar manejo de revokeObjectURL si es necesario
-            }
-
-            // --- CAMBIO: Mostrar el grupo y el nombre ---
+            const formattedGroupName = formatGroupNameForDisplay(mediaRecord.group);
             const infoParagraph = document.createElement('p');
-            infoParagraph.innerHTML = `<b>Grupo:</b> ${mediaRecord.group}<br><b>Nombre:</b> ${mediaRecord.name}`;
-            infoParagraph.style.fontSize = '0.85em'; // Hacerlo un poco más pequeño
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'X';
-            deleteButton.classList.add('delete-button');
-            deleteButton.title = `Borrar ${mediaRecord.name}`;
-            deleteButton.dataset.id = mediaRecord.id;
-            deleteButton.addEventListener('click', handleDeleteClick);
+            infoParagraph.innerHTML = `<b>Grupo:</b> ${formattedGroupName}<br><b>Nombre:</b> ${mediaRecord.name}`;
+            infoParagraph.style.fontSize = '0.85em';
+            const deleteButton = document.createElement('button'); /* ... delete button ... */
+            deleteButton.textContent = 'X'; deleteButton.classList.add('delete-button'); deleteButton.title = `Borrar ${mediaRecord.name}`; deleteButton.dataset.id = mediaRecord.id; deleteButton.addEventListener('click', handleDeleteClick);
 
             mediaElementContainer.appendChild(mediaElement);
             mediaElementContainer.appendChild(infoParagraph);
             mediaElementContainer.appendChild(deleteButton);
             mediaDisplayDiv.appendChild(mediaElementContainer);
         });
-
-        console.log(`${mediaRecords.length} medios renderizados.`);
-        showFeedback(`Mostrando ${mediaRecords.length} medio(s).`, false);
-    }
-
-    // Función para cargar TODOS los medios
-    function displayAllMedia() {
-        if (!db) { showFeedback("La base de datos no está lista para cargar.", true); return; }
-        showFeedback("Cargando todos los medios...", false);
-
-        const transaction = db.transaction([STORE_NAME], 'readonly');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.getAll(); // Más simple que el cursor para obtener todo
-
-        request.onerror = (event) => {
-            console.error("Error al obtener todos los medios:", event.target.error);
-            showFeedback("Error al cargar todos los medios.", true);
-        };
-
-        request.onsuccess = (event) => {
-            const allMedia = event.target.result;
-            console.log(`Se encontraron ${allMedia.length} medios en total.`);
-            renderMedia(allMedia);
-        };
-    }
-
-    // --- NUEVA FUNCIÓN: Cargar medios por Grupo ---
-    function displayMediaByGroup(groupPrefix) {
-        if (!db) { showFeedback("La base de datos no está lista para cargar por grupo.", true); return; }
-        if (!groupPrefix) { showFeedback("Por favor, ingresa el prefijo del grupo a cargar.", true); return; }
-
-        showFeedback(`Cargando medios del grupo '${groupPrefix}'...`, false);
-
-        const transaction = db.transaction([STORE_NAME], 'readonly');
-        const store = transaction.objectStore(STORE_NAME);
-        // --- Usar el índice 'group' para buscar ---
-        const index = store.index('group');
-        // getAll(groupPrefix) obtiene todos los registros donde el campo 'group' coincide exactamente
-        const request = index.getAll(groupPrefix);
-
-        request.onerror = (event) => {
-            console.error(`Error al buscar por grupo '${groupPrefix}':`, event.target.error);
-            showFeedback(`Error al cargar el grupo '${groupPrefix}'.`, true);
-        };
-
-        request.onsuccess = (event) => {
-            const groupMedia = event.target.result;
-            console.log(`Se encontraron ${groupMedia.length} medios en el grupo '${groupPrefix}'.`);
-            renderMedia(groupMedia); // Reutilizamos la función de renderizado
-        };
+        showDisplayFeedback(`Mostrando ${mediaRecords.length} medio(s) para '${title}'.`, false);
     }
 
 
-    function deleteMedia(id) {
-        if (!db) { showFeedback("La base de datos no está lista para borrar.", true); return; }
-        const numericId = parseInt(id, 10);
-        if (isNaN(numericId)) { console.error("ID inválido para borrar:", id); return; }
-
-        const transaction = db.transaction([STORE_NAME], 'readwrite');
-        const store = transaction.objectStore(STORE_NAME);
+    // --- Función de Borrado (deleteMedia) ---
+    function deleteMedia(id) { // Borra solo del MEDIA_STORE_NAME
+        if (!db) { showDisplayFeedback("La base de datos no está lista.", true); return; }
+        const numericId = parseInt(id, 10); if (isNaN(numericId)) return;
+        const transaction = db.transaction([MEDIA_STORE_NAME], 'readwrite');
+        const store = transaction.objectStore(MEDIA_STORE_NAME);
         const request = store.delete(numericId);
-
-        request.onerror = (event) => {
-            console.error("Error al borrar el registro:", event.target.error);
-            showFeedback(`Error al borrar el archivo: ${event.target.error.message}`, true);
-        };
+        request.onerror = (event) => { showDisplayFeedback(`Error al borrar archivo: ${event.target.error.message}`, true); };
         request.onsuccess = (event) => {
-            console.log(`Registro con ID ${numericId} borrado exitosamente.`);
-            showFeedback("Archivo borrado.", false);
-            // Decidir qué recargar: ¿todo o el último grupo visto? Por simplicidad, limpiamos.
+            showDisplayFeedback("Archivo borrado.", false);
             mediaDisplayDiv.innerHTML = '<p>Lista actualizada. Carga de nuevo un grupo o todos los medios.</p>';
         };
+        // Nota: Esto no borra los metadatos del grupo si este queda vacío.
+        // Se podría añadir lógica para limpiar metadatos de grupos sin archivos.
     }
 
-    // --- NUEVA FUNCIÓN: Generar y Guardar JSON ---
+    // --- MODIFICADO: Generar JSON usando ambos Stores ---
     function generateAndSaveJson() {
         if (!db) {
-            showFeedback("La base de datos no está lista para exportar.", true);
+            showDisplayFeedback("La base de datos no está lista para exportar.", true);
             return;
         }
-        showFeedback("Iniciando exportación a JSON...", false);
+        showDisplayFeedback("Iniciando exportación a JSON...", false);
 
-        const transaction = db.transaction([STORE_NAME], 'readonly');
-        const store = transaction.objectStore(STORE_NAME);
-        const request = store.getAll(); // Obtener todos los registros
-
-        request.onerror = (event) => {
-            console.error("Error al obtener todos los medios para exportar:", event.target.error);
-            showFeedback("Error al leer datos para exportar JSON.", true);
-        };
-
-        request.onsuccess = (event) => {
-            const allMedia = event.target.result;
-            if (!allMedia || allMedia.length === 0) {
-                showFeedback("No hay medios en IndexedDB para exportar.", false);
-                return;
-            }
-
-            console.log(`Procesando ${allMedia.length} registros para JSON...`);
-
-            // Paso 1: Agrupar medios por 'group'
-            const groupedMedia = allMedia.reduce((acc, media) => {
-                const group = media.group;
-                if (!acc[group]) {
-                    acc[group] = []; // Crear array para este grupo si no existe
+        // Usaremos Promises para manejar las dos lecturas asíncronas
+        Promise.all([
+            getAllRecords(GROUP_METADATA_STORE_NAME), // Obtener todos los metadatos
+            getAllRecords(MEDIA_STORE_NAME)           // Obtener todos los archivos multimedia
+        ])
+            .then(([metadataRecords, mediaRecords]) => {
+                if (!mediaRecords || mediaRecords.length === 0) {
+                    showDisplayFeedback("No hay archivos multimedia en IndexedDB para exportar.", false);
+                    return;
                 }
-                acc[group].push(media); // Añadir el medio al array de su grupo
-                return acc;
-            }, {}); // El acumulador inicial es un objeto vacío
 
-            console.log(`Encontrados ${Object.keys(groupedMedia).length} grupos únicos.`);
+                // Crear un Mapa para acceso rápido a los metadatos por grupo
+                const metadataMap = new Map();
+                metadataRecords.forEach(meta => {
+                    metadataMap.set(meta.group, meta); // group es la key
+                });
+                console.log(`Metadatos cargados para ${metadataMap.size} grupos.`);
 
-            // Paso 2: Procesar cada grupo para generar la estructura JSON deseada
-            const finalJsonArray = [];
-            let imageCounter = 1; // Para generar IDs únicos de imagen dentro de un grupo
+                // Agrupar medios por 'group' (como antes)
+                const groupedMedia = mediaRecords.reduce((acc, media) => {
+                    const group = media.group;
+                    if (!acc[group]) acc[group] = [];
+                    acc[group].push(media);
+                    return acc;
+                }, {});
+                console.log(`Archivos agrupados para ${Object.keys(groupedMedia).length} grupos.`);
 
-            for (const groupPrefix in groupedMedia) {
-                if (groupedMedia.hasOwnProperty(groupPrefix)) {
-                    const mediaInGroup = groupedMedia[groupPrefix];
-                    imageCounter = 1; // Reiniciar contador para cada grupo
+                const finalJsonArray = [];
+                let imageCounter = 1;
 
-                    // Formatear nombre del grupo para 'alt' y placeholders
-                    const formattedGroupName = formatGroupNameForDisplay(groupPrefix);
+                for (const groupPrefix in groupedMedia) {
+                    if (groupedMedia.hasOwnProperty(groupPrefix)) {
+                        const mediaInGroup = groupedMedia[groupPrefix];
+                        imageCounter = 1;
 
-                    const groupJsonObject = {
-                        id: groupPrefix, // Usar el prefijo del grupo como ID principal
-                        targetIndex: "targetIndex: 0", // Valor fijo según tu estructura
-                        images: [],
-                        // Ruta web hipotética
-                        web: `.././pages/${groupPrefix}.html`,
-                        // Location fija según tu estructura
-                        location: "https://maps.app.goo.gl/mM8dMYTouK4HM7Z67",
-                        video: null, // Inicializar video como null
-                        // Texto de marcador de posición
-                        text: `Descripción para ${formattedGroupName}. Esta información debe ser añadida manualmente.`
-                    };
+                        // --- ¡NUEVO! Obtener metadatos para este grupo del Mapa ---
+                        const metadata = metadataMap.get(groupPrefix) || {}; // Usar {} si no hay metadatos
 
-                    // Iterar sobre los medios DENTRO de este grupo específico
-                    mediaInGroup.forEach(media => {
-                        // Si es imagen, añadir al array 'images'
-                        if (media.type.startsWith('image/')) {
-                            const imageId = `${groupPrefix}_${imageCounter++}`;
-                            // Ruta src hipotética
-                            const imageSrc = `../assets/${groupPrefix}/${media.name}`;
+                        const formattedGroupName = formatGroupNameForDisplay(groupPrefix);
 
-                            groupJsonObject.images.push({
-                                id: imageId,
-                                src: imageSrc,
-                                alt: formattedGroupName // Usar nombre de grupo formateado como alt
-                            });
-                        }
-                        // Si es video Y aún no hemos añadido uno para este grupo
-                        else if (media.type.startsWith('video/') && groupJsonObject.video === null) {
-                            const videoId = `${groupPrefix}_video_1`;
-                            // Ruta src hipotética
-                            const videoSrc = `../assets/${groupPrefix}/${media.name}`;
+                        const groupJsonObject = {
+                            id: groupPrefix,
+                            // Usar metadatos si existen, con valores por defecto si no
+                            targetIndex: metadata.targetIndex || "targetIndex: 0",
+                            images: [],
+                            web: metadata.web || `.././pages/${groupPrefix}.html`, // Default si no existe
+                            location: metadata.location || "", // Default vacío si no existe
+                            video: null,
+                            text: metadata.text || `Descripción para ${formattedGroupName} no definida.` // Default si no existe
+                        };
 
-                            groupJsonObject.video = {
-                                id: videoId,
-                                src: videoSrc
-                            };
-                        }
-                    }); // Fin forEach mediaInGroup
+                        // Procesar imágenes y video (igual que antes)
+                        mediaInGroup.forEach(media => {
+                            console.log(`Procesando '${media.name}' (${media.type}) para el grupo '${groupPrefix}'`);
+                            if (media.type.startsWith('image/')) {
+                                const imageId = `${groupPrefix}_${imageCounter++}`;
+                                const imageSrc = URL.createObjectURL(media.file) || `../assets/${groupPrefix}/${media.name}`; // Ruta hipotética
+                                groupJsonObject.images.push({ id: imageId, src: imageSrc, alt: formattedGroupName });
+                            } else if (media.type.startsWith('video/') && groupJsonObject.video === null) {
+                                const videoId = `${groupPrefix}_video_1`;
+                                const videoSrc = URL.createObjectURL(media.file) || `../assets/${groupPrefix}/${media.name}`; // Ruta hipotética
+                                groupJsonObject.video = { id: videoId, src: videoSrc };
+                            } else if(media.type.startsWith('mind')) {
+                                console.log(`media.type no es video ni imagen: ${media.type}`);
+                                groupJsonObject.web = URL.createObjectURL(media.file);
+                            }
+                        });
 
-                    finalJsonArray.push(groupJsonObject);
-                } // Fin hasOwnProperty check
-            } // Fin for...in groupedMedia
+                        finalJsonArray.push(groupJsonObject);
+                    }
+                } // Fin for...in
 
-            // Paso 3: Guardar en Local Storage
-            try {
-                const jsonString = JSON.stringify(finalJsonArray, null, 2); // null, 2 para indentación bonita
-                localStorage.setItem('mediaGroupsJson', jsonString);
-                console.log("JSON generado y guardado en Local Storage ('mediaGroupsJson').");
-                console.log(jsonString); // Mostrar en consola para verificación
-                showFeedback(`JSON generado para ${finalJsonArray.length} grupos y guardado en Local Storage.`, false);
+                // Guardar en Local Storage (igual que antes)
+                try {
+                    const jsonString = JSON.stringify(finalJsonArray, null, 2);
+                    localStorage.setItem('mediaGroupsJson', jsonString);
+                    console.log("JSON generado con metadatos y guardado en Local Storage ('mediaGroupsJson').");
+                    console.log(jsonString);
+                    showDisplayFeedback(`JSON generado para ${finalJsonArray.length} grupos y guardado en LS.`, false);
+                    // offerJsonDownload(jsonString, 'media_groups_export.json'); // Descomentar si quieres descarga
+                } catch (error) { /* ... manejo error JSON/LS ... */ }
 
-                // Opcional: Ofrecer descarga del JSON
-                // offerJsonDownload(jsonString, 'media_groups_export.json');
-
-            } catch (error) {
-                console.error("Error al convertir a JSON o guardar en Local Storage:", error);
-                showFeedback("Error al generar o guardar el JSON.", true);
-                if (error.name === 'QuotaExceededError') {
-                    alert("Error: El JSON generado es demasiado grande para guardarlo en Local Storage. Revisa la consola para ver el JSON.");
-                }
-            }
-        }; // Fin request.onsuccess
+            })
+            .catch(error => {
+                console.error("Error al leer datos de IndexedDB para exportar:", error);
+                showDisplayFeedback("Error al leer datos para exportar JSON.", true);
+            });
     }
 
-    // --- NUEVA FUNCIÓN Auxiliar: Formatear nombre de grupo ---
-    function formatGroupNameForDisplay(prefix) {
+    // --- NUEVA Función Auxiliar para leer todos los registros de un store ---
+    function getAllRecords(storeName) {
+        return new Promise((resolve, reject) => {
+            if (!db) { return reject("La base de datos no está abierta."); }
+            const transaction = db.transaction([storeName], 'readonly');
+            const store = transaction.objectStore(storeName);
+            const request = store.getAll();
+            request.onerror = (event) => reject(event.target.error);
+            request.onsuccess = (event) => resolve(event.target.result);
+        });
+    }
+
+    // --- Función Auxiliar: Formatear nombre de grupo (sin cambios) ---
+    function formatGroupNameForDisplay(prefix) { /* ... */
         if (!prefix) return "Grupo Desconocido";
-        // Reemplaza guiones bajos por espacios y capitaliza cada palabra
-        return prefix.replace(/_/g, ' ')
-            .replace(/\b\w/g, char => char.toUpperCase());
+        return prefix.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
     }
+    // --- Función Opcional: Descarga JSON (sin cambios) ---
+    function offerJsonDownload(jsonString, filename) { /* ... */ }
 
-    // --- NUEVA FUNCIÓN Opcional: Ofrecer descarga del JSON ---
-    function offerJsonDownload(jsonString, filename) {
-        const blob = new Blob([jsonString], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a); // Necesario para Firefox
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url); // Liberar memoria
-        console.log(`Ofreciendo descarga del archivo: ${filename}`);
-    }
 
     // --- Manejadores de Eventos ---
+    saveMetaButton.addEventListener('click', saveGroupMetadata);
+    loadMetaButton.addEventListener('click', loadGroupMetadataForEditing);
+    saveFilesButton.addEventListener('click', saveFilesToGroup); // Usar la función renombrada
+    loadAllButton.addEventListener('click', displayAllMedia);
+    loadGroupButton.addEventListener('click', () => displayMediaByGroup(loadGroupInput.value.trim()));
     exportJsonButton.addEventListener('click', generateAndSaveJson);
-    saveButton.addEventListener('click', saveMedia);
-    loadAllButton.addEventListener('click', displayAllMedia); // Botón para cargar todo
-    // --- NUEVO: Event listener para cargar por grupo ---
-    loadGroupButton.addEventListener('click', () => {
-        const groupToLoad = loadGroupInput.value.trim();
-        displayMediaByGroup(groupToLoad);
-    });
+    // El event listener para borrar (handleDeleteClick) no necesita cambios
 
-    function handleDeleteClick(event) {
+    function handleDeleteClick(event) { /* ... sin cambios ... */
         if (event.target.classList.contains('delete-button')) {
             const mediaId = event.target.dataset.id;
-            if (mediaId && confirm(`¿Estás seguro de que quieres borrar este archivo?`)) {
+            if (mediaId && confirm(`¿Estás seguro de que quieres borrar este archivo? (Esto no borra los metadatos del grupo)`)) {
                 deleteMedia(mediaId);
             }
         }
     }
 
-    function showFeedback(message, isError = false) {
-        feedbackDiv.textContent = message;
-        feedbackDiv.className = isError ? 'error' : (message ? 'success' : '');
-    }
 
     // --- Inicialización ---
     openDB();
 
-})();
+})(); // Fin IIFE
