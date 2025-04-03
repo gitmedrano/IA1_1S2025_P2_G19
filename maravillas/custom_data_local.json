@@ -1,0 +1,117 @@
+[
+  {
+    "id": "laguna_lachua",
+    "targetIndex": "targetIndex: 0",
+    "images": [
+      {
+        "id": "laguna_lachua_1",
+        "src": "../otras_maravillas/laguna_lachua/laguna_lachua_1.jpg",
+        "alt": "Laguna Lachua"
+      },
+      {
+        "id": "laguna_lachua_2",
+        "src": "../otras_maravillas/laguna_lachua/laguna_lachua_2.jpg",
+        "alt": "Laguna Lachua"
+      }
+    ],
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/e18eWCnaBvfsXFtg8",
+    "video": {
+      "id": "laguna_lachua_video_1",
+      "src": "../otras_maravillas/laguna_lachua/laguna_lachua_video_1.mp4"
+    },
+    "text": "La Laguna Lachuá es un cenote en Guatemala. Está ubicada en la selva tropical en el municipio de Cobán, del Departamento de Alta Verapaz."
+  },
+  {
+    "id": "volcan_pacaya",
+    "targetIndex": "targetIndex: 1",
+    "images": [
+      {
+        "id": "volcan_pacaya_1",
+        "src": "../otras_maravillas/volcan_pacaya/volcan_pacaya_1.jpg",
+        "alt": "Volcán Pacaya"
+      },
+      {
+        "id": "volcan_pacaya_2",
+        "src": "../otras_maravillas/volcan_pacaya/volcan_pacaya_2.jpg",
+        "alt": "Volcán Pacaya"
+      }
+    ],
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/volcan_pacaya",
+    "video": {
+      "id": "volcan_pacaya_video_1",
+      "src": "../otras_maravillas/volcan_pacaya/volcan_pacaya_video_1.mp4"
+    },
+    "text": "El Volcán Pacaya es un volcán activo, conocido por sus frecuentes erupciones y espectaculares flujos de lava."
+  },
+  {
+    "id": "piramide_de_guiza",
+    "targetIndex": "targetIndex: 2",
+    "images": [
+      {
+        "id": "piramide_de_guiza_1",
+        "src": "../otras_maravillas/piramide_de_guiza/piramide_de_guiza_1.jpg",
+        "alt": "Pirámide de Guiza"
+      },
+      {
+        "id": "piramide_de_guiza_2",
+        "src": "../otras_maravillas/piramide_de_guiza/piramide_de_guiza_2.jpg",
+        "alt": "Pirámide de Guiza"
+      }
+    ],
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/piramide_de_guiza",
+    "video": {
+      "id": "piramide_de_guiza_video_1",
+      "src": "../otras_maravillas/piramide_de_guiza/piramide_de_guiza_video_1.mp4"
+    },
+    "text": "La Pirámide de Guiza es un monumento histórico y un ejemplo icónico de la arquitectura antigua."
+  },
+  {
+    "id": "jardines_colgantes_de_babilonia",
+    "targetIndex": "targetIndex: 3",
+    "images": [
+      {
+        "id": "jardines_colgantes_de_babilonia_1",
+        "src": "../otras_maravillas/jardines_colgantes_de_babilonia/jardines_colgantes_de_babilonia_1.jpg",
+        "alt": "Jardines Colgantes de Babilonia"
+      },
+      {
+        "id": "jardines_colgantes_de_babilonia_2",
+        "src": "../otras_maravillas/jardines_colgantes_de_babilonia/jardines_colgantes_de_babilonia_2.jpg",
+        "alt": "Jardines Colgantes de Babilonia"
+      }
+    ],
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/jardines_colgantes_de_babilonia",
+    "video": {
+      "id": "jardines_colgantes_de_babilonia_video_1",
+      "src": "../otras_maravillas/jardines_colgantes_de_babilonia/jardines_colgantes_de_babilonia_video_1.mp4"
+    },
+    "text": "Los Jardines Colgantes de Babilonia son una de las maravillas antiguas, famosos por su ingeniería avanzada y su exuberante vegetación."
+  },
+  {
+    "id": "custom_mind",
+    "targetIndex": "0",
+    "images": [
+      {
+        "id": "custom_mind_1",
+        "src": "a",
+        "alt": "custom_mind"
+      },
+      {
+        "id": "custom_mind_2",
+        "src": "a",
+        "alt": "custom_mind"
+      }
+    ],
+    "web": "../otras_maravillas/custom_mind_4.mind",
+    "location": "",
+    "video": {
+      "id": "custom_mind_video_1",
+      "src": "link"
+    },
+    "text": "se agregan nuevas maravillas"
+  }
+]
