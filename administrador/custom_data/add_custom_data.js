@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('customData', JSON.stringify(customData));
         form.reset();
         loadCustomData();
-        alert('Objeto agregado/actualizado exitosamente');
+        alert('Maravilla agregada/actualizada exitosamente');
     });
 
     cancelButton.addEventListener('click', () => {
