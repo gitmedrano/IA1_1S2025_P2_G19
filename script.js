@@ -18,4 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
             spans.forEach(span => span.classList.remove('active'));
         }
     });
-}); 
+});
+
+
+function validateLoginRoute() {
+
+    if (!validateLoggedIn()) {
+        window.location.href = "./administrador/login/login.html";
+    }else{
+        window.location.href = "./administrador/custom_data/add_custom_data.html";
+    }
+}

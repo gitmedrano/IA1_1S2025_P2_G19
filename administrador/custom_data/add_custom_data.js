@@ -1,4 +1,14 @@
-// File: maravillas/custom_data/add_custom_data.js
+
+if (!validateLoggedIn()) {
+    window.location.href = "../index.html";
+}
+
+function loggOut() {
+    sessionStorage.clear();
+    location.href = '../.././index.html';
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('customDataForm');
     const fileInput = document.getElementById('jsonFileInput');

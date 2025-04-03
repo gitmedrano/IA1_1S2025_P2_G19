@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurisAR Administrador</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+
+<body>
+    <header>
+        <h1 class="unimatch-h1">Bienvenido Administrador</h1>
+        <p>Plataforma para agregar o eliminar hechos de la base de datos</p>
+        <button class="btn-secondary footer-btn" onclick="loggOut()">Salir</button>
+    </header>
+
+    <div class="prolog-tester">
+        <span class="admin-icon">📂</span>
+        <label for="fileInput">Cargar Archivo Prolog:</label>
+        <input type="file" id="fileInput" accept=".pl">
+        <div id="queryInputContainer">
+            <input class="input-query-prolog" type="text" id="queryInput" placeholder="Ingrese su consulta en Prolog">
+            <button class="btn-secondary" onclick="runQuery()">Ejecutar</button>
+        </div>
+        <br>
+        <textarea id="output" rows="10" cols="50" readonly></textarea>
+        <div style="font-size: 30px; margin: 25px;" onclick="generarYdescargarCustomProlog()">
+            <span class="admin-icon">💾</span>
+            <span>Descargar Archivo .pl</span>
+        </div>
+        <span><strong>*Todos los cambios se guardan automáticamente*</strong></span>
+    </div>
+
+
+    <div class="table-container">
+        <div class="unimatch-table">
+            <h2>Facultades</h2>
+            <input type="text" class="form-curso-input" id="newOption1">
+            <button class="btn-secondary" onclick="addOption('newOption1', 'USAC', 'tableFacultad')">Agregar</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Universidad</th>
+                        <th>Facultad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tableFacultad">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="unimatch-table">
+            <h2>Carreras</h2>
+            <label for="facultadSelect">Facultad:</label>
+            <select id="facultadSelect" onchange="optionSelected()">
+                <option value="">-- Selecciona --</option>
+            </select>
+            <input class="form-curso-input" type="text" id="newOption2">
+            <button class="btn-secondary" onclick="addOption('newOption2',selectedFacultadCarrera, 'tableCarrera')">
+                Agregar
+            </button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Facultad</th>
+                        <th>Carrera</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tableCarrera">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="opciones-container">
+        <h2 class="opciones-h2"> Para las siguientes configuraciones debe elegir una facultad y una carrera</h2>
+        <label for="opcionesFacultadSelect">Facultad:</label>
+        <select id="opcionesFacultadSelect" onchange="optionFacultadSelected()">
+            <option value="">-- Selecciona --</option>
+        </select>
+
+        <label for="opcionesCarreraSelect">Carrera:</label>
+        <select id="opcionesCarreraSelect" onchange="optionCarreraSelected()">
+            <option value="">-- Selecciona --</option>
+        </select>
+    </div>
+
+    <div class="table-container">
+        <div class="unimatch-table">
+            <h2>Perfil</h2>
+            <input type="text" class="form-curso-input" id="newOption3">
+            <button class="btn-secondary"
+                onclick="addOptionConfig('newOption3', optionsSelectedCarrera, 'tablePerfil', adminConfiguration.perfilMap)">
+                Agregar
+            </button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Carrera</th>
+                        <th>Perfil</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablePerfil">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="unimatch-table">
+            <h2>Habilidad</h2>
+            <input type="text" class="form-curso-input" id="newOption4">
+            <button class="btn-secondary"
+                onclick="addOptionConfig('newOption4', optionsSelectedCarrera, 'tableHabilidad', adminConfiguration.habilidadMap)">
+                Agregar
+            </button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Carrera</th>
+                        <th>Habilidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tableHabilidad">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="table-container">
+        <div class="unimatch-table">
+            <h2>Preferencias</h2>
+            <input type="text" class="form-curso-input" id="newOption5">
+            <button class="btn-secondary"
+                onclick="addOptionConfig('newOption5', optionsSelectedCarrera, 'tablePreferencia',adminConfiguration.preferenciaMap)">
+                Agregar
+            </button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Carrera</th>
+                        <th>Preferencias</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablePreferencia">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="unimatch-table">
+            <h2>Temas de interes</h2>
+            <input type="text" class="form-curso-input" id="newOption6">
+            <button class="btn-secondary"
+                onclick="addOptionConfig('newOption6', optionsSelectedCarrera, 'tableTema', adminConfiguration.temaMap)">
+                Agregar
+            </button>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Carrera</th>
+                        <th>Temas de Interes</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tableTema">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <div class="unimatch-table">
+            <h2>Cursos</h2>
+            <form class="form-curso" id="cursoForm">
+                <div class="form-grid">
+
+                    <div class="form-column">
+                        <label for="curso">Nombre: </label>
+                        <input class="form-curso-input" type="text" id="curso" name="curso" required />
+                    </div>
+                    <div class="form-column">
+                        <label for="seccion">Sección: </label>
+                        <input class="form-curso-input" type="text" id="seccion" name="seccion" minlength="1"
+                            maxlength="1" required />
+                    </div>
+
+
+                    <div class="form-column">
+                        <label for="hora_inicio">Hora Inicio: </label>
+                        <input class="form-curso-input" type="number" id="hora_inicio" name="hora_inicio" min="0"
+                            max="23" required />
+                    </div>
+                    <div class="form-column">
+                        <label for="hora_fin">Hora Fin: </label>
+                        <input class="form-curso-input" type="number" id="hora_fin" min="0" max="23" required />
+                    </div>
+
+                </div>
+                <button class="btn-secondary" type="submit">Agregar</button>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Carrera</th>
+                        <th>Curso</th>
+                        <th>Seccion</th>
+                        <th>Hora Inicio</th>
+                        <th>Hora Fin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tableHorario">
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <script src="../configuraciones.js"></script>
+    <script src="../utilities.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>
