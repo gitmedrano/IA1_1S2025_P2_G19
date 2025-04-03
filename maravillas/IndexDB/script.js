@@ -361,7 +361,9 @@
                         if(groupJsonObject.id === "custom_mind") {
                             localStorage.setItem('customMind', JSON.stringify(groupJsonObject));
                         }
-                        finalJsonArray.push(groupJsonObject);
+                        if(groupJsonObject.id !== "custom_mind") {
+                            finalJsonArray.push(groupJsonObject);
+                        }
                     }
                 } // Fin for...in
 

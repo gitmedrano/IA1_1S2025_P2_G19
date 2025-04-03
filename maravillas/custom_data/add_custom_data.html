@@ -1,0 +1,52 @@
+<!-- File: maravillas/custom_data/add_custom_data.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Custom Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar">
+    <a href="../.././index.html" class="back-button">
+        <i class="fas fa-arrow-left"></i> Volver
+    </a>
+    <h1> <i class="fas fa-water"></i>Agregar Custom Data</h1>
+</nav>
+<div class="container">
+    <div class="section" id="form-section">
+        <h2>Agregar Nuevo Objeto</h2>
+        <form id="customDataForm">
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required>
+            <label for="targetIndex">Target Index:</label>
+            <input type="text" id="targetIndex" name="targetIndex" required>
+            <label for="images">Images (comma separated URLs):</label>
+            <input type="text" id="images" name="images" required>
+            <label for="web">Web:</label>
+            <input type="text" id="web" name="web" required>
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location">
+            <label for="video">Video URL:</label>
+            <input type="text" id="video" name="video" required>
+            <label for="text">Text:</label>
+            <textarea id="text" name="text" required></textarea>
+            <button type="submit">Agregar</button>
+            <button type="button" id="cancelButton">Cancelar</button>
+        </form>
+    </div>
+    <div class="section" id="upload-section">
+        <h2>Subir Archivo JSON</h2>
+        <input type="file" id="jsonFileInput" accept=".json">
+        <button type="button" id="downloadButton">Descargar JSON</button>
+    </div>
+    <div class="section" id="list-section">
+        <h2>Lista de Objetos</h2>
+        <ul id="customDataList"></ul>
+    </div>
+</div>
+<script src="add_custom_data.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+[
+  {
+    "id": "mind_ar",
+    "targetIndex": "targetIndex: 0",
+    "images": [
+      {
+        "id": "mind_ar_1",
+        "src": "blob:http://localhost:63343/53242e58-4e67-4ce6-952a-27f527cbe04a",
+        "alt": "Mind Ar"
+      },
+      {
+        "id": "mind_ar_2",
+        "src": "blob:http://localhost:63343/76f897c6-ebb2-4f3f-892d-dc8d54f88525",
+        "alt": "Mind Ar"
+      }
+    ],
+    "web": ".././pages/mind_ar.html",
+    "location": "",
+    "video": {
+      "id": "mind_ar_video_1",
+      "src": "blob:http://localhost:63343/2b6783e1-c0c2-4d3a-b6eb-004247c7aeda"
+    },
+    "text": "Descripción para Mind Ar no definida."
+  },
+  {
+    "id": "rick_morty",
+    "targetIndex": "targetIndex: 1",
+    "images": [
+      {
+        "id": "rick_morty_1",
+        "src": "blob:http://localhost:63343/e83b0dba-57bf-4f5a-a07a-da74023ba328",
+        "alt": "Rick Morty"
+      },
+      {
+        "id": "rick_morty_2",
+        "src": "blob:http://localhost:63343/c5243e74-4e82-48e6-af95-a3b59f223f26",
+        "alt": "Rick Morty"
+      }
+    ],
+    "web": ".././pages/rick_morty.html",
+    "location": "",
+    "video": {
+      "id": "rick_morty_video_1",
+      "src": "blob:http://localhost:63343/447efb54-6975-4881-94e7-4ea11a3519e1"
+    },
+    "text": "Descripción para Rick Morty no definida."
+  }
+]
