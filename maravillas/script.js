@@ -202,8 +202,9 @@ fetch('data.json')
     .then(data => {
         createScene(data, "normal_scene");
         if(localStorage.getItem("customMind") && JSON.parse(localStorage.getItem("customMind"))
-            &&JSON.parse(localStorage.getItem("mediaGroupsJson"))){
-            createScene(JSON.parse(localStorage.getItem("mediaGroupsJson")), "custom_scene");
+            &&JSON.parse(localStorage.getItem("customData"))){
+            let customData  =  JSON.parse(localStorage.getItem("customData"));
+            createScene(customData.filter(item => item.id !=='custom_mind'), "custom_scene");
         }
     });
 

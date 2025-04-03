@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadCustomData() {
         const customData = JSON.parse(localStorage.getItem('customData')) || [];
+        let customMind = customData.find(item => item.id ==='custom_mind');
+        if(customMind){
+            localStorage.setItem('customMind', JSON.stringify(customMind));
+        }
         customDataList.innerHTML = '';
         customData.forEach((item, index) => {
             const listItem = document.createElement('li');

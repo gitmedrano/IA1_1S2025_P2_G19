@@ -1,48 +1,117 @@
 [
   {
-    "id": "mind_ar",
+    "id": "laguna_lachua",
     "targetIndex": "targetIndex: 0",
     "images": [
       {
-        "id": "mind_ar_1",
-        "src": "blob:http://localhost:63343/53242e58-4e67-4ce6-952a-27f527cbe04a",
-        "alt": "Mind Ar"
+        "id": "laguna_lachua_1",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/laguna_lachua/laguna_lachua_1.jpg",
+        "alt": "Laguna Lachua"
       },
       {
-        "id": "mind_ar_2",
-        "src": "blob:http://localhost:63343/76f897c6-ebb2-4f3f-892d-dc8d54f88525",
-        "alt": "Mind Ar"
+        "id": "laguna_lachua_2",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/laguna_lachua/laguna_lachua_2.jpg",
+        "alt": "Laguna Lachua"
       }
     ],
-    "web": ".././pages/mind_ar.html",
-    "location": "",
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/e18eWCnaBvfsXFtg8",
     "video": {
-      "id": "mind_ar_video_1",
-      "src": "blob:http://localhost:63343/2b6783e1-c0c2-4d3a-b6eb-004247c7aeda"
+      "id": "laguna_lachua_video_1",
+      "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/laguna_lachua/laguna_lachua_video_1.mp4"
     },
-    "text": "Descripción para Mind Ar no definida."
+    "text": "La Laguna Lachuá es un cenote en Guatemala. Está ubicada en la selva tropical en el municipio de Cobán, del Departamento de Alta Verapaz."
   },
   {
-    "id": "rick_morty",
+    "id": "volcan_pacaya",
     "targetIndex": "targetIndex: 1",
     "images": [
       {
-        "id": "rick_morty_1",
-        "src": "blob:http://localhost:63343/e83b0dba-57bf-4f5a-a07a-da74023ba328",
-        "alt": "Rick Morty"
+        "id": "volcan_pacaya_1",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/volcan_pacaya/volcan_pacaya_1.jpg",
+        "alt": "Volcán Pacaya"
       },
       {
-        "id": "rick_morty_2",
-        "src": "blob:http://localhost:63343/c5243e74-4e82-48e6-af95-a3b59f223f26",
-        "alt": "Rick Morty"
+        "id": "volcan_pacaya_2",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/volcan_pacaya/volcan_pacaya_2.jpg",
+        "alt": "Volcán Pacaya"
       }
     ],
-    "web": ".././pages/rick_morty.html",
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/volcan_pacaya",
+    "video": {
+      "id": "volcan_pacaya_video_1",
+      "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/volcan_pacaya/volcan_pacaya_video_1.mp4"
+    },
+    "text": "El Volcán Pacaya es un volcán activo, conocido por sus frecuentes erupciones y espectaculares flujos de lava."
+  },
+  {
+    "id": "piramide_de_guiza",
+    "targetIndex": "targetIndex: 2",
+    "images": [
+      {
+        "id": "piramide_de_guiza_1",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/piramide_de_guiza/piramide_de_guiza_1.jpg",
+        "alt": "Pirámide de Guiza"
+      },
+      {
+        "id": "piramide_de_guiza_2",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/piramide_de_guiza/piramide_de_guiza_2.jpg",
+        "alt": "Pirámide de Guiza"
+      }
+    ],
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/piramide_de_guiza",
+    "video": {
+      "id": "piramide_de_guiza_video_1",
+      "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/piramide_de_guiza/piramide_de_guiza_video_1.mp4"
+    },
+    "text": "La Pirámide de Guiza es un monumento histórico y un ejemplo icónico de la arquitectura antigua."
+  },
+  {
+    "id": "jardines_colgantes_de_babilonia",
+    "targetIndex": "targetIndex: 3",
+    "images": [
+      {
+        "id": "jardines_colgantes_de_babilonia_1",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/jardines_colgantes_de_babilonia/jardines_colgantes_de_babilonia_1.jpg",
+        "alt": "Jardines Colgantes de Babilonia"
+      },
+      {
+        "id": "jardines_colgantes_de_babilonia_2",
+        "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/jardines_colgantes_de_babilonia/jardines_colgantes_de_babilonia_2.jpg",
+        "alt": "Jardines Colgantes de Babilonia"
+      }
+    ],
+    "web": "https://www.guatevalley.com/",
+    "location": "https://maps.app.goo.gl/jardines_colgantes_de_babilonia",
+    "video": {
+      "id": "jardines_colgantes_de_babilonia_video_1",
+      "src": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/jardines_colgantes_de_babilonia/jardines_colgantes_de_babilonia_video_1.mp4"
+    },
+    "text": "Los Jardines Colgantes de Babilonia son una de las maravillas antiguas, famosos por su ingeniería avanzada y su exuberante vegetación."
+  },
+  {
+    "id": "custom_mind",
+    "targetIndex": "0",
+    "images": [
+      {
+        "id": "custom_mind_1",
+        "src": "a",
+        "alt": "custom_mind"
+      },
+      {
+        "id": "custom_mind_2",
+        "src": "a",
+        "alt": "custom_mind"
+      }
+    ],
+    "web": "https://turisar-mind-files-g19.us-mia-1.linodeobjects.com/custom_mind_4.mind",
     "location": "",
     "video": {
-      "id": "rick_morty_video_1",
-      "src": "blob:http://localhost:63343/447efb54-6975-4881-94e7-4ea11a3519e1"
+      "id": "custom_mind_video_1",
+      "src": "link"
     },
-    "text": "Descripción para Rick Morty no definida."
+    "text": "se agregan nuevas maravillas"
   }
 ]
