@@ -1,3 +1,12 @@
+function validateLoginRoute() {
+
+    if (!validateLoggedIn()) {
+        window.location.href = "./administrador/login/login.html";
+    }else{
+        window.location.href = "./administrador/custom_data/add_custom_data.html";
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Hamburger menu functionality
     const hamburger = document.querySelector('.hamburger');
@@ -18,4 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             spans.forEach(span => span.classList.remove('active'));
         }
     });
-}); 
+});
+
+
+
