@@ -14,6 +14,7 @@
         "alt": "Cenotes Candelaria"
       }
     ],
+    "filter": "../assets/cenotes_candelaria/cenotes_candelaria_filter.png",
     "web": ".././pages/cenotes_candelaria.html",
     "location": "https://maps.app.goo.gl/mM8dMYTouK4HM7Z67",
     "video": {
@@ -37,6 +38,7 @@
         "alt": "Lago Atitlán"
       }
     ],
+    "filter": "../assets/lago_atitlan/lago_atitlan_filter.png",
     "web": ".././pages/lago_atitlan.html",
     "location": "https://maps.app.goo.gl/q11YcJZqDR3aMrLi9",
     "video": {
@@ -60,6 +62,7 @@
         "alt": "Laguna Brava"
       }
     ],
+    "filter": "../assets/laguna_brava/laguna_brava_filter.png",
     "web": ".././pages/laguna_brava.html",
     "location": "https://maps.app.goo.gl/VADAxpGbRCo23HX59",
     "video": {
@@ -83,6 +86,7 @@
         "alt": "Las Conchas"
       }
     ],
+    "filter": "../assets/las_conchas/las_conchas_filter.png",
     "web": ".././pages/las_conchas.html",
     "location": "https://maps.app.goo.gl/iVbpVUwMudpxWH5dA",
     "video": {
@@ -106,6 +110,7 @@
         "alt": "Río Dulce"
       }
     ],
+    "filter": "../assets/rio_dulce/rio_dulce_filter.png",
     "web": ".././pages/rio_dulce.html",
     "location": "https://maps.app.goo.gl/Q6NpatxppFg91zrU6",
     "video": {
@@ -129,6 +134,7 @@
         "alt": "Semuc Champey"
       }
     ],
+    "filter": "../assets/semuc_champey/semuc_champey_filter.png",
     "web": ".././pages/semuc_champey.html",
     "location": "https://maps.app.goo.gl/omg94TB4VDew376YA",
     "video": {
@@ -152,6 +158,7 @@
         "alt": "Tikal"
       }
     ],
+    "filter": "../assets/tikal/tikal_filter.png",
     "web": ".././pages/tikal.html",
     "location": "https://maps.app.goo.gl/Sm6nqdVh8nZppeJW8",
     "video": {
@@ -164,87 +171,168 @@
     "id": "chichen_itza",
     "targetIndex": "targetIndex: 7",
     "images": [
-      { "id": "chichen_itza_1", "src": "../assets/chichen_itza/chichen_itza_2.jpg", "alt": "Chichen Itza" },
-      { "id": "chichen_itza_2", "src": "../assets/chichen_itza/chichen_itza_3.jpg", "alt": "Chichen Itza" }
+      {
+        "id": "chichen_itza_1",
+        "src": "../assets/chichen_itza/chichen_itza_2.jpg",
+        "alt": "Chichen Itza"
+      },
+      {
+        "id": "chichen_itza_2",
+        "src": "../assets/chichen_itza/chichen_itza_3.jpg",
+        "alt": "Chichen Itza"
+      }
     ],
+    "filter": "../assets/chichen_itza/chichen_itza_filter.png",
     "web": ".././pages/chichen_itza.html",
     "location": "https://maps.app.goo.gl/VDLtny8AKGGCDg4M6",
-    "video": { "id": "chichen_itza_video_1", "src": "../assets/chichen_itza/chichen_itza_video_1.mp4" },
+    "video": {
+      "id": "chichen_itza_video_1",
+      "src": "../assets/chichen_itza/chichen_itza_video_1.mp4"
+    },
     "text": "Chichen Itza is a large pre-Columbian archaeological site built by the Maya civilization located in the Yucatan Peninsula, Mexico."
   },
   {
     "id": "coliseo_romano",
     "targetIndex": "targetIndex: 8",
     "images": [
-      { "id": "coliseo_romano_1", "src": "../assets/coliseo_romano/coliseo_romano_2.jpg", "alt": "Coliseo Romano" },
-      { "id": "coliseo_romano_2", "src": "../assets/coliseo_romano/coliseo_romano_3.jpg", "alt": "Coliseo Romano" }
+      {
+        "id": "coliseo_romano_1",
+        "src": "../assets/coliseo_romano/coliseo_romano_2.jpg",
+        "alt": "Coliseo Romano"
+      },
+      {
+        "id": "coliseo_romano_2",
+        "src": "../assets/coliseo_romano/coliseo_romano_3.jpg",
+        "alt": "Coliseo Romano"
+      }
     ],
+    "filter": "../assets/coliseo_romano/coliseo_romano_filter.png",
     "web": ".././pages/coliseo_romano.html",
     "location": "https://maps.app.goo.gl/4dtVCtZfsskXqURr6",
-    "video": { "id": "coliseo_romano_video_1", "src": "../assets/coliseo_romano/coliseo_romano_video_1.mp4" },
+    "video": {
+      "id": "coliseo_romano_video_1",
+      "src": "../assets/coliseo_romano/coliseo_romano_video_1.mp4"
+    },
     "text": "The Roman Colosseum is an ancient amphitheater in Rome, Italy, known for its historical significance and architectural grandeur."
   },
   {
     "id": "cristo_redentor",
     "targetIndex": "targetIndex: 9",
     "images": [
-      { "id": "cristo_redentor_1", "src": "../assets/cristo_redentor/cristo_redentor_2.jpg", "alt": "Cristo Redentor" },
-      { "id": "cristo_redentor_2", "src": "../assets/cristo_redentor/cristo_redentor_3.jpg", "alt": "Cristo Redentor" }
+      {
+        "id": "cristo_redentor_1",
+        "src": "../assets/cristo_redentor/cristo_redentor_2.jpg",
+        "alt": "Cristo Redentor"
+      },
+      {
+        "id": "cristo_redentor_2",
+        "src": "../assets/cristo_redentor/cristo_redentor_3.jpg",
+        "alt": "Cristo Redentor"
+      }
     ],
+    "filter": "../assets/cristo_redentor/cristo_redentor_filter.png",
     "web": ".././pages/cristo_redentor.html",
     "location": "https://maps.app.goo.gl/8FmdGUrBiJXwHFF46",
-    "video": { "id": "cristo_redentor_video_1", "src": "../assets/cristo_redentor/cristo_redentor_video_1.mp4" },
+    "video": {
+      "id": "cristo_redentor_video_1",
+      "src": "../assets/cristo_redentor/cristo_redentor_video_1.mp4"
+    },
     "text": "Cristo Redentor is an iconic statue of Jesus Christ in Rio de Janeiro, Brazil, known for its panoramic views and cultural significance."
   },
   {
     "id": "machu_picchu",
     "targetIndex": "targetIndex: 10",
     "images": [
-      { "id": "machu_picchu_1", "src": "../assets/machu_picchu/machu_picchu_2.jpg", "alt": "Machu Picchu" },
-      { "id": "machu_picchu_2", "src": "../assets/machu_picchu/machu_picchu_3.jpg", "alt": "Machu Picchu" }
+      {
+        "id": "machu_picchu_1",
+        "src": "../assets/machu_picchu/machu_picchu_2.jpg",
+        "alt": "Machu Picchu"
+      },
+      {
+        "id": "machu_picchu_2",
+        "src": "../assets/machu_picchu/machu_picchu_3.jpg",
+        "alt": "Machu Picchu"
+      }
     ],
+    "filter": "../assets/machu_picchu/machu_picchu_filter.png",
     "web": ".././pages/machu_picchu.html",
     "location": "https://maps.app.goo.gl/yZY6vLCDTxjhUSmGA",
-    "video": { "id": "machu_picchu_video_1", "src": "../assets/machu_picchu/machu_picchu_video_1.mp4" },
+    "video": {
+      "id": "machu_picchu_video_1",
+      "src": "../assets/machu_picchu/machu_picchu_video_1.mp4"
+    },
     "text": "Machu Picchu is an ancient Incan city located in the Andes Mountains of Peru, renowned for its archaeological significance and stunning views."
   },
   {
     "id": "muralla_china",
     "targetIndex": "targetIndex: 11",
     "images": [
-      { "id": "muralla_china_1", "src": "../assets/muralla_china/muralla_china_2.jpg", "alt": "Muralla China" },
-      { "id": "muralla_china_2", "src": "../assets/muralla_china/muralla_china_3.jpg", "alt": "Muralla China" }
+      {
+        "id": "muralla_china_1",
+        "src": "../assets/muralla_china/muralla_china_2.jpg",
+        "alt": "Muralla China"
+      },
+      {
+        "id": "muralla_china_2",
+        "src": "../assets/muralla_china/muralla_china_3.jpg",
+        "alt": "Muralla China"
+      }
     ],
+    "filter": "../assets/muralla_china/muralla_china_filter.png",
     "web": ".././pages/muralla_china.html",
     "location": "https://maps.app.goo.gl/TeQnD7QNrbY2pi2y5",
-    "video": { "id": "muralla_china_video_1", "src": "../assets/muralla_china/muralla_china_video_1.mp4" },
+    "video": {
+      "id": "muralla_china_video_1",
+      "src": "../assets/muralla_china/muralla_china_video_1.mp4"
+    },
     "text": "The Great Wall of China is a series of fortifications made of stone, brick, and other materials, built along the northern borders of China."
   },
   {
     "id": "petra",
     "targetIndex": "targetIndex: 12",
     "images": [
-      { "id": "petra_1", "src": "../assets/petra/petra_2.jpg", "alt": "Petra" },
-      { "id": "petra_2", "src": "../assets/petra/petra_3.jpg", "alt": "Petra" }
+      {
+        "id": "petra_1",
+        "src": "../assets/petra/petra_2.jpg",
+        "alt": "Petra"
+      },
+      {
+        "id": "petra_2",
+        "src": "../assets/petra/petra_3.jpg",
+        "alt": "Petra"
+      }
     ],
+    "filter": "../assets/petra/petra_filter.png",
     "web": ".././pages/petra.html",
     "location": "https://maps.app.goo.gl/fuzKdkQavDvB16ZA9",
-    "video": { "id": "petra_video_1", "src": "../assets/petra/petra_video_1.mp4" },
+    "video": {
+      "id": "petra_video_1",
+      "src": "../assets/petra/petra_video_1.mp4"
+    },
     "text": "Petra is a historical and archaeological city in southern Jordan, famous for its rock-cut architecture and water conduit system."
   },
   {
     "id": "taj_mahal",
     "targetIndex": "targetIndex: 13",
     "images": [
-      { "id": "taj_mahal_1", "src": "../assets/taj_mahal/taj_mahal_2.jpg", "alt": "Taj Mahal" },
-      { "id": "taj_mahal_2", "src": "../assets/taj_mahal/taj_mahal_3.jpg", "alt": "Taj Mahal" }
+      {
+        "id": "taj_mahal_1",
+        "src": "../assets/taj_mahal/taj_mahal_2.jpg",
+        "alt": "Taj Mahal"
+      },
+      {
+        "id": "taj_mahal_2",
+        "src": "../assets/taj_mahal/taj_mahal_3.jpg",
+        "alt": "Taj Mahal"
+      }
     ],
+    "filter": "../assets/taj_mahal/taj_mahal_filter.png",
     "web": ".././pages/taj_mahal.html",
     "location": "https://maps.app.goo.gl/67pHVnpepqTwaygaA",
-    "video": { "id": "taj_mahal_video_1", "src": "../assets/taj_mahal/taj_mahal_video_1.mp4" },
+    "video": {
+      "id": "taj_mahal_video_1",
+      "src": "../assets/taj_mahal/taj_mahal_video_1.mp4"
+    },
     "text": "The Taj Mahal is an ivory-white marble mausoleum in Agra, India, built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal."
   }
 ]
-
-
-

@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadCustomData() {
         const customData = JSON.parse(localStorage.getItem('customData')) || [];
-        let customMind = customData.find(item => item.id ==='custom_mind');
-        if(customMind){
+        let customMind = customData.find(item => item.id === 'custom_mind');
+        if (customMind) {
             localStorage.setItem('customMind', JSON.stringify(customMind));
         }
         customDataList.innerHTML = '';
@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <strong>ID:</strong> ${item.id} <br>
                 <strong>Target Index:</strong> ${item.targetIndex} <br>
                 <strong>Images:</strong> ${item.images.map(img => img.src).join(', ')} <br>
+                <strong>Filter:</strong> ${item.filter} <br>
                 <strong>Web:</strong> ${item.web} <br>
                 <strong>Location:</strong> ${item.location} <br>
                 <strong>Video:</strong> ${item.video.src} <br>
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.id.value = item.id;
         form.targetIndex.value = item.targetIndex;
         form.images.value = item.images.map(img => img.src).join(', ');
+        form.filter.value = item.filter;
         form.web.value = item.web;
         form.location.value = item.location;
         form.video.value = item.video.src;
@@ -71,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 src: url.trim(),
                 alt: formData.get('id')
             })),
+            filter: formData.get('filter'),
             web: formData.get('web'),
             location: formData.get('location'),
             video: { id: `${formData.get('id')}_video_1`, src: formData.get('video') },
@@ -81,8 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index !== undefined) {
             customData[index] = newObject;
             delete form.dataset.index;
-        }
-        else {
+        } else {
             customData.push(newObject);
         }
         localStorage.setItem('customData', JSON.stringify(customData));
