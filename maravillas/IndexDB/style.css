@@ -1,0 +1,235 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+}
+
+.controls {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="file"] {
+    display: block;
+    margin: 0 auto 15px auto;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#feedback {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#feedback.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+#feedback.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+#mediaDisplay {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 100px; /* Para que se vea el contenedor aunque esté vacío */
+}
+
+#mediaDisplay div {
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #f9f9f9;
+    position: relative; /* Para posicionar el botón de borrar */
+}
+
+#mediaDisplay img,
+#mediaDisplay video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px auto;
+    border-radius: 4px;
+}
+
+#mediaDisplay p {
+    font-size: 0.9em;
+    color: #555;
+    word-wrap: break-word;
+}
+
+.delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    line-height: 25px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0; /* Reset padding */
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+/* ... (Estilos anteriores) ... */
+
+/* Opcional: Estilo para los nuevos inputs y separador */
+.controls hr {
+    margin: 15px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+input[type="text"] {
+    display: block;
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto 15px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* ... (Estilos anteriores) ... */
+
+/* Estilos para las secciones y la nueva de metadatos */
+.controls {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+}
+
+.metadata-section, .file-section, .display-section {
+    border: 1px solid #e0e0e0;
+}
+
+.metadata-section h2, .file-section h2, .display-section h2 {
+    margin-top: 0;
+    color: #0056b3;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.controls label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="url"],
+textarea {
+    display: block;
+    width: 95%; /* Un poco menos del 100% para padding */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+textarea {
+    resize: vertical; /* Permitir redimensionar verticalmente */
+}
+
+/* Botones específicos si es necesario */
+#loadMetaButton {
+    background-color: #6c757d;
+    font-size: 0.9em;
+    padding: 8px 12px;
+    margin-left: 10px; /* Espacio junto al input */
+}
+#loadMetaButton:hover {
+    background-color: #5a6268;
+}
+
+#saveMetaButton {
+    background-color: #28a745; /* Verde */
+    margin-top: 15px;
+    width: 100%; /* Ocupar ancho */
+}
+#saveMetaButton:hover {
+    background-color: #218838;
+}
+
+#saveFilesButton {
+    background-color: #007bff; /* Azul */
+    margin-top: 15px;
+    width: 100%;
+}
+#saveFilesButton:hover {
+    background-color: #0056b3;
+}
+
+
+/* Feedbacks específicos */
+#metadataFeedback, #fileFeedback, #displayFeedback {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: bold;
+    min-height: 1.5em; /* Para que no colapse cuando está vacío */
+    line-height: 1.5em;
+}
+
+#metadataFeedback.success, #fileFeedback.success, #displayFeedback.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;}
+#metadataFeedback.error, #fileFeedback.error, #displayFeedback.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }

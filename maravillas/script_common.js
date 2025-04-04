@@ -1,37 +1,5 @@
-function contentLoaded() {
-    document.addEventListener('DOMContentLoaded', function () {
-        const loading = document.querySelector('.loading');
-        loading.classList.add('active');
-
-        // const sceneEl = document.querySelector('a-scene');
-        const sceneEl = document.querySelector('a-scene');
-        sceneEl.addEventListener('loaded', function () {
-            loading.classList.remove('active');
-        });
-
-        sceneEl.addEventListener('arError', function (ev) {
-            loading.classList.remove('active');
-            alert('Lo sentimos, hubo un error al iniciar la experiencia AR. Por favor, asegúrate de dar permiso a la cámara y refresca la página.');
-        });
-
-        sceneEl.addEventListener("arReady", (event) => {
-            console.log("MindAR is ready")
-        });
-        // arError event triggered when something went wrong. Mostly browser compatbility issue
-        sceneEl.addEventListener("arError", (event) => {
-            console.log("MindAR failed to start")
-        });
-    });
-}
-
-
 function createScene(data, sceneId) {
     const arContainer = document.querySelector('#id_ar_container');
-    // const assetsContainer = document.querySelector('a-assets');
-    // const sceneContainer = document.querySelector('a-scene');
-    // sceneContainer.setAttribute('mindar-image', 'imageTargetSrc: ./assets/targets.mind;');
-    // const normalScene = document.querySelector('#id_normal_scene');
-
     const sceneContainer = document.createElement('a-scene');
     const assetsContainer = document.createElement('a-assets');
     const acamera = document.createElement('a-camera');
@@ -63,40 +31,31 @@ function createScene(data, sceneId) {
     sceneContainer.appendChild(assetsContainer);
     sceneContainer.appendChild(acamera);
 
-    // let customMind = JSON.parse(localStorage.getItem("customMind"));
-    // if (customMind) {
+    sceneContainer.setAttribute('mindar-image', `imageTargetSrc: ./14_maravillas_scale_2.mind;`);
+    if (sceneId === "custom_scene") {
+        let customMind = JSON.parse(localStorage.getItem("customMind"));
+        console.log("customMind: ", customMind);
+        console.log("Setting mindar-image attribute to: ", customMind.web);
+        sceneContainer.setAttribute('mindar-image', `imageTargetSrc: ${customMind.web}; uiScanning:no`);
+    }
+    sceneContainer.setAttribute('class', 'ar-scene');
+    sceneContainer.setAttribute('vr-mode-ui', 'enabled: false');
+    sceneContainer.setAttribute('device-orientation-permission-ui', 'enabled: false');
 
+    sceneContainer.addEventListener('arError', function (ev) {
+        // loading.classList.remove('active');
+        alert('Lo sentimos, hubo un error al iniciar la experiencia AR. Por favor, asegúrate de dar permiso a la cámara y refresca la página.');
+    });
 
-        sceneContainer.setAttribute('mindar-image', `imageTargetSrc: ./14_maravillas_scale_2.mind;`);
-        if(sceneId === "custom_scene") {
-            let customMind = JSON.parse(localStorage.getItem("customMind"));
-            console.log("customMind: ", customMind);
-            console.log("Setting mindar-image attribute to: ", customMind.web);
-            sceneContainer.setAttribute('mindar-image', `imageTargetSrc: ${customMind.web}; uiScanning:no`);
-        }
-        sceneContainer.setAttribute('class', 'ar-scene');
-        sceneContainer.setAttribute('vr-mode-ui', 'enabled: false');
-        sceneContainer.setAttribute('device-orientation-permission-ui', 'enabled: false');
-        // sceneContainer.setAttribute('id', 'custom_scene');
-        // normalScene.setAttribute('mindar-image', `imageTargetSrc: ${customMind.web}`);
-        // sceneContainer.addEventListener('loaded', function () {
-        //     loading.classList.remove('active');
-        // });
+    sceneContainer.addEventListener("arReady", (event) => {
+        console.log("MindAR is ready")
+    });
+    // arError event triggered when something went wrong. Mostly browser compatbility issue
+    sceneContainer.addEventListener("arError", (event) => {
+        console.log("MindAR failed to start")
+    });
 
-        sceneContainer.addEventListener('arError', function (ev) {
-            // loading.classList.remove('active');
-            alert('Lo sentimos, hubo un error al iniciar la experiencia AR. Por favor, asegúrate de dar permiso a la cámara y refresca la página.');
-        });
-
-        sceneContainer.addEventListener("arReady", (event) => {
-            console.log("MindAR is ready")
-        });
-        // arError event triggered when something went wrong. Mostly browser compatbility issue
-        sceneContainer.addEventListener("arError", (event) => {
-            console.log("MindAR failed to start")
-        });
-
-        arContainer.appendChild(sceneContainer);
+    arContainer.appendChild(sceneContainer);
     // }
 
     data.forEach(item => {
@@ -120,6 +79,10 @@ function createScene(data, sceneId) {
         const entity = document.createElement('a-entity');
         entity.id = `entity-${item.id}`;
         entity.setAttribute('mindar-image-target', item.targetIndex);
+        if (sceneId === "custom_scene") {
+            entity.setAttribute("data-custom", sceneId);
+            entity.setAttribute("data-id", item.id);
+        }
 
         const plane = document.createElement('a-plane');
         plane.id = `plane-${item.id}`;
@@ -146,17 +109,12 @@ function createScene(data, sceneId) {
         buttons.forEach(button => {
             const aImage = document.createElement('a-image');
             aImage.id = `${button.id}-${item.id}`;
-            console.log("button id: ", aImage.id);
             aImage.classList.add('clickable');
             aImage.setAttribute('src', button.src);
             aImage.setAttribute('position', button.position);
             aImage.setAttribute('height', '0.15');
             aImage.setAttribute('width', '0.15');
             aImage.setAttribute('animation', 'property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate');
-            aImage.addEventListener('click', function () {
-                console.log("play button click");
-                // video.play();
-            });
             panel.appendChild(aImage);
         });
 
@@ -171,14 +129,14 @@ function createScene(data, sceneId) {
         panel.appendChild(aVideo);
 
         item.images.forEach((image, index) => {
-             if (index < 2) {
-            const aImage = document.createElement('a-image');
-            aImage.id = image.id;
-            aImage.setAttribute('src', `#${image.id}`);
-            aImage.setAttribute('position', index === 1 ? '-0.3 0.8 0' : '0.3 0.8 0');
-            aImage.setAttribute('width', '0.5');
-            aImage.setAttribute('height', '0.5');
-            panel.appendChild(aImage);
+            if (index < 2) {
+                const aImage = document.createElement('a-image');
+                aImage.id = image.id;
+                aImage.setAttribute('src', `#${image.id}`);
+                aImage.setAttribute('position', index === 1 ? '-0.3 0.8 0' : '0.3 0.8 0');
+                aImage.setAttribute('width', '0.5');
+                aImage.setAttribute('height', '0.5');
+                panel.appendChild(aImage);
             }
         });
 
@@ -196,34 +154,10 @@ function createScene(data, sceneId) {
 
         entity.appendChild(panel);
         sceneContainer.appendChild(entity);
-
         setupEntityEvents(item, sceneId);
-        // contentLoaded();
     });
 
-    // data.forEach(item => {
-    //    setTimeout(() => setupEntityEvents(item, sceneId), 2000);
-    // });
 }
-
-// fetch('data.json')
-//     .then(response => response.json())
-//     .then(data => {
-//         createScene(data, "normal_scene");
-//         if(localStorage.getItem("customMind") && JSON.parse(localStorage.getItem("customMind"))
-//             &&JSON.parse(localStorage.getItem("customData"))){
-//             let customData  =  JSON.parse(localStorage.getItem("customData"));
-//             createScene(customData.filter(item => item.id !=='custom_mind'), "custom_scene");
-//         }
-//     });
-
-if(localStorage.getItem("customMind") && JSON.parse(localStorage.getItem("customMind"))
-    &&JSON.parse(localStorage.getItem("customData"))){
-    let customData  =  JSON.parse(localStorage.getItem("customData"));
-    createScene(customData.filter(item => item.id !=='custom_mind'), "custom_scene");
-}
-
-
 
 function setupEntityEvents(item, sceneId) {
     const id = item.id;
@@ -261,6 +195,7 @@ function setupEntityEvents(item, sceneId) {
     entity.addEventListener("targetFound", event => {
         console.log("target found");
         console.log("event: ", event);
+        window.parent.postMessage({origen: sceneId, mensaje: 'targetFound'}, '*');
         panel.setAttribute('visible', true);
     });
 
@@ -268,6 +203,7 @@ function setupEntityEvents(item, sceneId) {
     entity.addEventListener("targetLost", event => {
         console.log("target lost");
         video.pause();
+        window.parent.postMessage({origen: sceneId, mensaje: 'targetLost'}, '*');
         panel.setAttribute('visible', false);
     });
 
