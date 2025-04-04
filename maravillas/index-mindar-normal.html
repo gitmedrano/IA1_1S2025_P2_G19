@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maravillas de Guatemala y el Mundo</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="mindar_styles.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1><i class="fas fa-camera"></i> TurisAR</h1>
+        <h2>Maravillas de Guatemala y el Mundo</h2>
+    </div>
+
+    <div class="ar-container" id="id_ar_container">
+<!--        <a-scene id="id_normal_scene" class="ar-scene" mindar-image="imageTargetSrc: ./14_maravillas_scale_2.mind;" vr-mode-ui="enabled: false"-->
+<!--            device-orientation-permission-ui="enabled: false">-->
+
+<!--&lt;!&ndash;            <a-assets>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <img id="icon-web" src="../assets/icons/btn_web.png" alt="Web">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <img id="icon-location" src="../assets/icons/btn_map.png" alt="Location">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <img id="icon-play" src="../assets/icons/btn_play.png" alt="Play">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <img id="icon-pause" src="../assets/icons/btn_pause.png" alt="Pause">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            </a-assets>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"&ndash;&gt;-->
+<!--&lt;!&ndash;                      raycaster="near: 10; far: 10000; objects: .clickable">&ndash;&gt;-->
+<!--&lt;!&ndash;            </a-camera>&ndash;&gt;-->
+
+<!--        </a-scene>-->
+    </div>
+
+    <div class="instructions">
+        <p><i class="fas fa-info-circle"></i> Apunta tu cámara hacia una imagen de las  Maravillas de Guatemala y el Mundo</p>
+        <p><i class="fas fa-hand-point-up"></i> Mantén el dispositivo estable para mejor experiencia</p>
+    </div>
+
+    <div class="loading">
+        <p><i class="fas fa-spinner fa-spin"></i> Cargando experiencia AR...</p>
+    </div>
+
+    <div id="buttons">
+        <button id="playButton">
+            Play
+        </button>
+        <button id="pauseButton">
+            Pause
+        </button>
+        <button id="stopButton">
+            Stop
+        </button>
+    </div>
+    <script src="script_common.js"></script>
+    <script src="script_normal_scene.js"></script>
+</body>
+
+</html>

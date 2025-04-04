@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A-Frame Iframe Communication</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Evita barras de desplazamiento */
+        }
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw; /* 100% del ancho del viewport */
+            height: 100vh; /* 100% del alto del viewport */
+            border: none; /* Quita el borde */
+        }
+        /* Opcional: Para visualizarlos uno encima de otro */
+        iframe:nth-child(2) {
+            z-index: 1; /* El segundo iframe encima */
+        }
+    </style>
+</head>
+<body>
+
+<iframe id="custom_scene" src="index-mindar-custom.html"></iframe>
+<iframe id="normal_scene" src="index-mindar-normal.html"></iframe>
+
+<script>
+    // const normal_scene = document.getElementById('normal_scene').contentWindow;
+    // const custom_scene = document.getElementById('custom_scene').contentWindow;
+
+    // Función para enviar mensajes entre iframes
+    function enviarMensaje(iframe, mensaje) {
+        iframe.postMessage(mensaje, '*');
+    }
+    // window.addEventListener('message', (evento) => {
+    //     console.log('Mensaje recibido de', evento.data.origen, ':', evento.data.mensaje);
+    // });
+    // Escuchar mensajes de los iframes
+    window.addEventListener('message', (evento) => {
+         const iframe1 = document.getElementById('normal_scene')
+        const iframe2 = document.getElementById('custom_scene');
+        if (evento.data.origen === "normal_scene") {
+            if (evento.data.mensaje === 'targetFound') {
+                console.log('target found in custom-scene');
+                // escena2.style.display = 'none'; // Ocultar el iframe
+                //ocuultar el iframe
+                iframe2.style.display = 'none'; // Ocultar el iframe
+            }else{
+                iframe2.style.display = 'block'; // Mostrar el iframe
+            }
+        } else if (evento.data.origen ==="custom_scene") {
+            if (evento.data.mensaje === 'targetFound') {
+                console.log('target found in custom-scene');
+                iframe1.style.display = 'none'; // Ocultar el iframe
+            }else{
+                iframe1.style.display = 'block'; // Mostrar el iframe
+            }
+        }
+    });
+</script>
+</body>
+</html>
