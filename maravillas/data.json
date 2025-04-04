@@ -4,12 +4,12 @@
     "targetIndex": "targetIndex: 0",
     "images": [
       {
-        "id": "cenotes_candelaria_1",
+        "id": "cenotes_candelaria_2",
         "src": "../assets/cenotes_candelaria/cenotes_candelaria_2.jpg",
         "alt": "Cenotes Candelaria"
       },
       {
-        "id": "cenotes_candelaria_2",
+        "id": "cenotes_candelaria_3",
         "src": "../assets/cenotes_candelaria/cenotes_candelaria_3.jpg",
         "alt": "Cenotes Candelaria"
       }

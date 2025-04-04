@@ -36,16 +36,16 @@ function createScene(data, sceneId) {
     const assetsContainer = document.createElement('a-assets');
     const acamera = document.createElement('a-camera');
 
-
     acamera.setAttribute('position', '0 0 0');
     acamera.setAttribute('look-controls', 'enabled: false');
     acamera.setAttribute('cursor', 'fuse: false; rayOrigin: mouse;');
     acamera.setAttribute('raycaster', 'near: 10; far: 10000; objects: .clickable');
 
-    let assetsList = [{id: 'icon-web', src: '../assets/icons/btn_web.png', alt: 'Web'},
-        {id: 'icon-location', src: '../assets/icons/btn_map.png', alt: 'Location'},
-        {id: 'icon-play', src: '../assets/icons/btn_play.png', alt: 'Play'},
-        {id: 'icon-pause', src: '../assets/icons/btn_pause.png', alt: 'Pause'}];
+    let assetsList = [
+        {id: `icon-web-${sceneId}`, src: '../assets/icons/btn_web.png', alt: 'Web'},
+        {id: `icon-location-${sceneId}`, src: '../assets/icons/btn_map.png', alt: 'Location'},
+        {id: `icon-play-${sceneId}`, src: '../assets/icons/btn_play.png', alt: 'Play'},
+        {id: `icon-pause-${sceneId}`, src: '../assets/icons/btn_pause.png', alt: 'Pause'}];
 
     assetsList.forEach(asset => {
         const img = document.createElement('img');
@@ -137,21 +137,26 @@ function createScene(data, sceneId) {
         panel.setAttribute('position', '0 0 0');
 
         const buttons = [
-            {id: 'web-button', src: '#icon-web', position: '-0.8 0.4 0'},
-            {id: 'location-button', src: '#icon-location', position: '-0.8 0.2 0'},
-            {id: 'play-button', src: '#icon-play', position: '-0.8 0 0'},
-            {id: 'pause-button', src: '#icon-pause', position: '-0.8 -0.2 0'}
+            {id: `web-button-${sceneId}`, src: `#icon-web-${sceneId}`, position: '-0.8 0.4 0'},
+            {id: `location-button-${sceneId}`, src: `#icon-location-${sceneId}`, position: '-0.8 0.2 0'},
+            {id: `play-button-${sceneId}`, src: `#icon-play-${sceneId}`, position: '-0.8 0 0'},
+            {id: `pause-button-${sceneId}`, src: `#icon-pause-${sceneId}`, position: '-0.8 -0.2 0'}
         ];
 
         buttons.forEach(button => {
             const aImage = document.createElement('a-image');
             aImage.id = `${button.id}-${item.id}`;
+            console.log("button id: ", aImage.id);
             aImage.classList.add('clickable');
             aImage.setAttribute('src', button.src);
             aImage.setAttribute('position', button.position);
             aImage.setAttribute('height', '0.15');
             aImage.setAttribute('width', '0.15');
             aImage.setAttribute('animation', 'property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate');
+            aImage.addEventListener('click', function () {
+                console.log("play button click");
+                // video.play();
+            });
             panel.appendChild(aImage);
         });
 
@@ -192,45 +197,53 @@ function createScene(data, sceneId) {
         entity.appendChild(panel);
         sceneContainer.appendChild(entity);
 
-        setupEntityEvents(item);
+        setupEntityEvents(item, sceneId);
         // contentLoaded();
     });
+
+    // data.forEach(item => {
+    //    setTimeout(() => setupEntityEvents(item, sceneId), 2000);
+    // });
 }
 
-fetch('data.json')
-    .then(response => response.json())
-    .then(data => {
-        createScene(data, "normal_scene");
-        if(localStorage.getItem("customMind") && JSON.parse(localStorage.getItem("customMind"))
-            &&JSON.parse(localStorage.getItem("customData"))){
-            let customData  =  JSON.parse(localStorage.getItem("customData"));
-            createScene(customData.filter(item => item.id !=='custom_mind'), "custom_scene");
-        }
-    });
+// fetch('data.json')
+//     .then(response => response.json())
+//     .then(data => {
+//         createScene(data, "normal_scene");
+//         if(localStorage.getItem("customMind") && JSON.parse(localStorage.getItem("customMind"))
+//             &&JSON.parse(localStorage.getItem("customData"))){
+//             let customData  =  JSON.parse(localStorage.getItem("customData"));
+//             createScene(customData.filter(item => item.id !=='custom_mind'), "custom_scene");
+//         }
+//     });
 
-// if(localStorage.getItem("customMind") && JSON.parse(localStorage.getItem("customMind"))
-//     &&JSON.parse(localStorage.getItem("mediaGroupsJson"))){
-//     createScene(JSON.parse(localStorage.getItem("mediaGroupsJson")), "custom_scene");
-// }
+if(localStorage.getItem("customMind") && JSON.parse(localStorage.getItem("customMind"))
+    &&JSON.parse(localStorage.getItem("customData"))){
+    let customData  =  JSON.parse(localStorage.getItem("customData"));
+    createScene(customData.filter(item => item.id !=='custom_mind'), "custom_scene");
+}
 
 
 
-function setupEntityEvents(item) {
+function setupEntityEvents(item, sceneId) {
     const id = item.id;
-    const entity = document.querySelector(`#entity-${id}`);
-    const plane = document.querySelector(`#plane-${id}`);
-    const panel = document.querySelector(`#panel-${id}`);
-    const playButton = document.querySelector(`#play-button-${id}`);
-    const pauseButton = document.querySelector(`#pause-button-${id}`);
-    const webButton = document.querySelector(`#web-button-${id}`);
-    const locationButton = document.querySelector(`#location-button-${id}`);
-    const video = document.querySelector(`#${id}_video_1`);
+    const entity = document.getElementById(`entity-${id}`);
+    const plane = document.getElementById(`plane-${id}`);
+    const panel = document.getElementById(`panel-${id}`);
+    const playButton = document.getElementById(`play-button-${sceneId}-${id}`);
+    const pauseButton = document.getElementById(`pause-button-${sceneId}-${id}`);
+    const webButton = document.getElementById(`web-button-${sceneId}-${id}`);
+    const locationButton = document.getElementById(`location-button-${sceneId}-${id}`);
+    const video = document.getElementById(`${id}_video_1`);
+
 
     playButton.addEventListener('click', function () {
+        console.log("play button click");
         video.play();
     });
 
     pauseButton.addEventListener('click', function () {
+        console.log("pause button click");
         video.pause();
     });
 
