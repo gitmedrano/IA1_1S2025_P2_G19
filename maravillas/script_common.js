@@ -13,7 +13,10 @@ function createScene(data, sceneId) {
         {id: `icon-web-${sceneId}`, src: '../assets/icons/btn_web.png', alt: 'Web'},
         {id: `icon-location-${sceneId}`, src: '../assets/icons/btn_map.png', alt: 'Location'},
         {id: `icon-play-${sceneId}`, src: '../assets/icons/btn_play.png', alt: 'Play'},
-        {id: `icon-pause-${sceneId}`, src: '../assets/icons/btn_pause.png', alt: 'Pause'}];
+        {id: `icon-pause-${sceneId}`, src: '../assets/icons/btn_pause.png', alt: 'Pause'},
+        {id: `icon-filter-${sceneId}`, src: '../assets/icons/btn_filter.png', alt: 'Filter'}
+    ];
+
 
     assetsList.forEach(asset => {
         const img = document.createElement('img');
@@ -103,7 +106,8 @@ function createScene(data, sceneId) {
             {id: `web-button-${sceneId}`, src: `#icon-web-${sceneId}`, position: '-0.8 0.4 0'},
             {id: `location-button-${sceneId}`, src: `#icon-location-${sceneId}`, position: '-0.8 0.2 0'},
             {id: `play-button-${sceneId}`, src: `#icon-play-${sceneId}`, position: '-0.8 0 0'},
-            {id: `pause-button-${sceneId}`, src: `#icon-pause-${sceneId}`, position: '-0.8 -0.2 0'}
+            {id: `pause-button-${sceneId}`, src: `#icon-pause-${sceneId}`, position: '-0.8 -0.2 0'},
+            {id: `filter-button-${sceneId}`, src: `#icon-filter-${sceneId}`, position: '-0.8 -0.4 0'}
         ];
 
         buttons.forEach(button => {
@@ -115,6 +119,7 @@ function createScene(data, sceneId) {
             aImage.setAttribute('height', '0.15');
             aImage.setAttribute('width', '0.15');
             aImage.setAttribute('animation', 'property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate');
+            aImage.style.zIndex = '9999';
             panel.appendChild(aImage);
         });
 
@@ -168,6 +173,7 @@ function setupEntityEvents(item, sceneId) {
     const pauseButton = document.getElementById(`pause-button-${sceneId}-${id}`);
     const webButton = document.getElementById(`web-button-${sceneId}-${id}`);
     const locationButton = document.getElementById(`location-button-${sceneId}-${id}`);
+    const filterButton = document.getElementById(`filter-button-${sceneId}-${id}`);
     const video = document.getElementById(`${id}_video_1`);
 
 
@@ -189,6 +195,11 @@ function setupEntityEvents(item, sceneId) {
         console.log("location button click");
         // window.location.href = item.location;
         window.open(item.location, '_blank');
+    });
+    filterButton.addEventListener('click', function () {
+        console.log("filter button click");
+        video.pause();
+        window.parent.postMessage({origen: sceneId, mensaje: 'filter'}, '*');
     });
 
     // detect target found

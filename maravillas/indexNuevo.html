@@ -18,7 +18,10 @@
         }
         /* Opcional: Para visualizarlos uno encima de otro */
         iframe:nth-child(2) {
-            z-index: 1; /* El segundo iframe encima */
+            z-index: 3; /* El segundo iframe encima */
+        }
+        iframe:nth-child(3) {
+            z-index: 2; /* El tercer iframe encima */
         }
     </style>
 </head>
@@ -26,6 +29,7 @@
 
 <iframe id="custom_scene" src="index-mindar-custom.html"></iframe>
 <iframe id="normal_scene" src="index-mindar-normal.html"></iframe>
+<iframe id="filter" src="filter.html"></iframe>
 
 <script>
     // const normal_scene = document.getElementById('normal_scene').contentWindow;
@@ -42,22 +46,41 @@
     window.addEventListener('message', (evento) => {
          const iframe1 = document.getElementById('normal_scene')
         const iframe2 = document.getElementById('custom_scene');
+        const filter = document.getElementById('filter');
+        if(evento.data.origen === 'filter'){
+            console.log('filter');
+            filter.style.zIndex = '2'; // Cambiar el z-index del iframe
+        }
+
         if (evento.data.origen === "normal_scene") {
             if (evento.data.mensaje === 'targetFound') {
                 console.log('target found in custom-scene');
                 // escena2.style.display = 'none'; // Ocultar el iframe
                 //ocuultar el iframe
                 iframe2.style.display = 'none'; // Ocultar el iframe
-            }else{
+                filter.style.display = 'none'; // Ocultar el iframe
+            }else if (evento.data.mensaje === 'targetLost') {
                 iframe2.style.display = 'block'; // Mostrar el iframe
+                filter.style.display = 'block'; // Mostrar el iframe
+            }else if(evento.data.mensaje === 'filter'){
+                console.log(' iframe normal filter');
+                filter.style.zIndex = '5'; // Cambiar el z-index del iframe
             }
+
         } else if (evento.data.origen ==="custom_scene") {
             if (evento.data.mensaje === 'targetFound') {
                 console.log('target found in custom-scene');
                 iframe1.style.display = 'none'; // Ocultar el iframe
-            }else{
+                filter.style.display = 'none'; // Ocultar el iframe
+            }else if (evento.data.mensaje === 'targetLost') {
                 iframe1.style.display = 'block'; // Mostrar el iframe
+                filter.style.display = 'block'; // Mostrar el iframe
+            }else if(evento.data.mensaje === 'filter'){
+                console.log(' iframe custom filter');
+                filter.style.display = 'block'; // Mostrar el iframe
+                filter.style.zIndex = '5'; // Cambiar el z-index del iframe
             }
+
         }
     });
 </script>
