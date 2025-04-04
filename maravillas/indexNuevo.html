@@ -8,6 +8,7 @@
             padding: 0;
             overflow: hidden; /* Evita barras de desplazamiento */
         }
+
         iframe {
             position: absolute;
             top: 0;
@@ -16,10 +17,12 @@
             height: 100vh; /* 100% del alto del viewport */
             border: none; /* Quita el borde */
         }
+
         /* Opcional: Para visualizarlos uno encima de otro */
         iframe:nth-child(2) {
             z-index: 3; /* El segundo iframe encima */
         }
+
         iframe:nth-child(3) {
             z-index: 2; /* El tercer iframe encima */
         }
@@ -39,48 +42,36 @@
     function enviarMensaje(iframe, mensaje) {
         iframe.postMessage(mensaje, '*');
     }
+
     // window.addEventListener('message', (evento) => {
     //     console.log('Mensaje recibido de', evento.data.origen, ':', evento.data.mensaje);
     // });
     // Escuchar mensajes de los iframes
     window.addEventListener('message', (evento) => {
-         const iframe1 = document.getElementById('normal_scene')
+        const iframe1 = document.getElementById('normal_scene');
         const iframe2 = document.getElementById('custom_scene');
         const filter = document.getElementById('filter');
-        if(evento.data.origen === 'filter'){
-            console.log('filter');
-            filter.style.zIndex = '2'; // Cambiar el z-index del iframe
-        }
 
-        if (evento.data.origen === "normal_scene") {
-            if (evento.data.mensaje === 'targetFound') {
-                console.log('target found in custom-scene');
-                // escena2.style.display = 'none'; // Ocultar el iframe
-                //ocuultar el iframe
-                iframe2.style.display = 'none'; // Ocultar el iframe
-                filter.style.display = 'none'; // Ocultar el iframe
-            }else if (evento.data.mensaje === 'targetLost') {
-                iframe2.style.display = 'block'; // Mostrar el iframe
-                filter.style.display = 'block'; // Mostrar el iframe
-            }else if(evento.data.mensaje === 'filter'){
-                console.log(' iframe normal filter');
-                filter.style.zIndex = '5'; // Cambiar el z-index del iframe
+        if (evento.data.origen === 'filter') {
+            filter.style.zIndex = '2';
+        } else {
+            const isNormalScene = evento.data.origen === "normal_scene";
+            const targetIframe = isNormalScene ? iframe2 : iframe1;
+
+            switch (evento.data.mensaje) {
+                case 'targetFound':
+                    targetIframe.style.display = 'none';
+                    filter.style.display = 'none';
+                    break;
+                case 'targetLost':
+                    targetIframe.style.display = 'block';
+                    filter.style.display = 'block';
+                    break;
+                case 'filter':
+                    filter.style.display = 'block';
+                    filter.style.zIndex = '5';
+                    break;
             }
-
-        } else if (evento.data.origen ==="custom_scene") {
-            if (evento.data.mensaje === 'targetFound') {
-                console.log('target found in custom-scene');
-                iframe1.style.display = 'none'; // Ocultar el iframe
-                filter.style.display = 'none'; // Ocultar el iframe
-            }else if (evento.data.mensaje === 'targetLost') {
-                iframe1.style.display = 'block'; // Mostrar el iframe
-                filter.style.display = 'block'; // Mostrar el iframe
-            }else if(evento.data.mensaje === 'filter'){
-                console.log(' iframe custom filter');
-                filter.style.display = 'block'; // Mostrar el iframe
-                filter.style.zIndex = '5'; // Cambiar el z-index del iframe
-            }
-
         }
     });
 </script>
