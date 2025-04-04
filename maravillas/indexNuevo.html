@@ -52,7 +52,7 @@
         const iframe2 = document.getElementById('custom_scene');
         const filter = document.getElementById('filter');
 
-        if (evento.data.origen === 'filter') {
+        if (evento.data.origen === 'filter' && evento.data.mensaje === 'removeFilter') {
             filter.style.zIndex = '2';
         } else {
             const isNormalScene = evento.data.origen === "normal_scene";
@@ -68,8 +68,10 @@
                     filter.style.display = 'block';
                     break;
                 case 'filter':
+                    console.log("filtro para aplicar: ", evento.data.filter);
                     filter.style.display = 'block';
                     filter.style.zIndex = '5';
+                    enviarMensaje(filter.contentWindow, {origen: 'father', mensaje: 'applyFilter', filter: evento.data.filter});
                     break;
             }
         }

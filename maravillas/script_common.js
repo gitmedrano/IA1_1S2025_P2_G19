@@ -199,7 +199,7 @@ function setupEntityEvents(item, sceneId) {
     filterButton.addEventListener('click', function () {
         console.log("filter button click");
         video.pause();
-        window.parent.postMessage({origen: sceneId, mensaje: 'filter'}, '*');
+        window.parent.postMessage({origen: sceneId, mensaje: 'filter', filter: item.filter}, '*');
     });
 
     // detect target found

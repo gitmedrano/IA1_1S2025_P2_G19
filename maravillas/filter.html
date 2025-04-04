@@ -10,35 +10,9 @@
           }
         }
     </script>
-    <script type="module">
-        import * as THREE from 'three';
-        import {MindARThree} from 'mindar-face-three';
-
-        const mindarThree = new MindARThree({
-            container: document.querySelector("#container"),
-        });
-
-        const {renderer, scene, camera} = mindarThree;
-
-        const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-        scene.add(light);
-
-        const faceMesh = mindarThree.addFaceMesh();
-        const texture = new THREE.TextureLoader().load('../assets/quetzal.png');
-
-        faceMesh.material.map = texture;
-        faceMesh.material.transparent = true;
-        faceMesh.material.needsUpdate = true;
-
-        scene.add(faceMesh);
-        const start = async () => {
-            await mindarThree.start();
-            renderer.setAnimationLoop(() => {
-                renderer.render(scene, camera);
-            });
-        }
-        start();
-    </script>
+<script type="module">
+    import './filter-setup.js';
+</script>
     <style>
         body {
             margin: 0;
@@ -57,13 +31,6 @@
 <div id="container" onclick="senMessage();">
 </div>
 </body>
-<script>
-    function senMessage() {
-        // const iframe = document.getElementById('normal_scene');
-        // const mensaje = {origen: "filter", mensaje: "filter"};
-        // iframe.contentWindow.postMessage(mensaje, '*');
-        window.parent.postMessage({origen: 'filter', mensaje: 'removeFilter'}, '*');
-    }
-</script>
+<script src="filter.js"></script>
 
 </html>
