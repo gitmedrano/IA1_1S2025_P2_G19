@@ -1,4 +1,4 @@
-/* Reset y estilos base */
+/* Base styles and reset */
 * {
     margin: 0;
     padding: 0;
@@ -11,13 +11,14 @@ body {
     color: #2c3e50;
     background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
     min-height: 100vh;
-    padding: 80px 20px 20px;
+    padding: 1rem;
+    padding-top: 5rem;
 }
 
-/* Navbar y hamburger menu */
+/* Navbar styles */
 .navbar {
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     position: fixed;
     width: 100%;
     top: 0;
@@ -30,7 +31,7 @@ body {
 }
 
 .navbar h1 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: #2c3e50;
 }
 
@@ -39,238 +40,180 @@ body {
     margin-right: 0.5rem;
 }
 
+
 .back-button {
-    text-decoration: none;
-    color: #2c3e50;
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.back-button:hover {
-    color: #e74c3c;
-}
-
-.nav-links {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.98);
-    padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.nav-links.active {
-    display: block;
-}
-
-.nav-links li {
-    list-style: none;
-    margin: 1rem 0;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #2c3e50;
-    font-weight: 500;
-    display: block;
     padding: 0.5rem;
-    transition: color 0.3s ease;
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 0.9rem;
+    transition: color 0.3s;
 }
 
-.nav-links a i {
-    margin-right: 0.5rem;
-    color: #e74c3c;
+/* Container and sections */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
 }
 
-.nav-links a:hover {
-    color: #e74c3c;
+.section {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+input, textarea {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    width: 100%;
+}
+
+button {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 100px; /* Add minimum width */
+    max-width: fit-content; /* Prevent over-stretching */
+    align-self: flex-start; /* Align to the start on forms */
+}
+
+form button {
+    align-self: center; /* Center form buttons */
+    width: 100%; /* Full width on mobile */
+    max-width: 200px; /* Maximum width for form buttons */
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.card {
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.card-content {
+    padding: 1rem;
+}
+
+.card-field {
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.card-field strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #2c3e50;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 0.5rem;
+}
+
+/* Card action buttons styles */
+.card-actions {
+    display: flex; /* Change to flex */
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.card-actions button {
+    flex: 0 1 auto; /* Don't allow buttons to grow */
+    min-width: 80px; /* Minimum width for card buttons */
+    font-size: 0.9rem; /* Slightly smaller font */
 }
 
 
+/* File upload section */
+#upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
-/* Media queries */
-@media (min-width: 768px) {
+#jsonFileInput {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    background-color: #fff;
+}
 
-
-    .nav-links {
-        display: flex;
-        position: static;
-        width: auto;
-        box-shadow: none;
-        padding: 0;
+/* Responsive breakpoints */
+@media (min-width: 640px) {
+    form button {
+        width: auto; /* Auto width on larger screens */
     }
-
-    .nav-links li {
-        margin: 0 0 0 2rem;
-    }
-
-    .hero-content h1 {
-        font-size: 3.5rem;
-    }
-
-    .destination-grid {
+    .cards-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .button-group {
-        flex-direction: row;
-        justify-content: center;
+    .container {
+        padding: 1.5rem;
     }
 }
 
 @media (min-width: 1024px) {
-    .destination-grid {
+    .cards-grid {
         grid-template-columns: repeat(3, 1fr);
     }
-}
 
-/* Form and page styles */
-.container {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+    .section {
+        padding: 2rem;
+    }
 
-.section {
-    margin-bottom: 30px;
-}
+    body {
+        padding-top: 6rem;
+    }
 
-h2 {
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
+    .navbar {
+        padding: 1rem 2rem;
+    }
 
-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-}
-
-form input[type="text"],
-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-form button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-form button:hover {
-    background-color: #2980b9;
-}
-
-#upload-section input[type="file"] {
-    display: block;
-    margin-top: 10px;
-}
-
-.alert {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-}
-
-.alert-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-}
-
-.alert-error {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-}
-
-
-/* Style for the custom data list */
-#customDataList {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#customDataList li {
-    margin: 1rem 0;
-    padding: 1rem;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-#customDataList li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-#customDataList li strong {
-    color: #2c3e50;
-}
-
-#customDataList li button {
-    margin-right: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-#customDataList li button:hover {
-    background-color: #2980b9;
-}
-
-/* Style for file input */
-#upload-section input[type=\"file\"] {
-    display: block;
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    background-color: #fff;
-}
-
-/* Style for download button */
-.download-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-}
-
-.download-button:hover {
-    background-color: #2980b9;
+    .navbar h1 {
+        font-size: 1.5rem;
+    }
 }

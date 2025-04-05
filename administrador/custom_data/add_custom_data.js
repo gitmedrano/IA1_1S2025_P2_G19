@@ -18,25 +18,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadCustomData() {
         const customData = JSON.parse(localStorage.getItem('customData')) || [];
-        let customMind = customData.find(item => item.id ==='custom_mind');
-        if(customMind){
+        let customMind = customData.find(item => item.id === 'custom_mind');
+        if (customMind) {
             localStorage.setItem('customMind', JSON.stringify(customMind));
         }
+
+        const customDataList = document.getElementById('customDataList');
         customDataList.innerHTML = '';
+
         customData.forEach((item, index) => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-                <strong>ID:</strong> ${item.id} <br>
-                <strong>Target Index:</strong> ${item.targetIndex} <br>
-                <strong>Images:</strong> ${item.images.map(img => img.src).join(', ')} <br>
-                <strong>Web:</strong> ${item.web} <br>
-                <strong>Location:</strong> ${item.location} <br>
-                <strong>Video:</strong> ${item.video.src} <br>
-                <strong>Text:</strong> ${item.text} <br>
-                <button onclick="editItem(${index})">Editar</button>
-                <button onclick="deleteItem(${index})">Eliminar</button>
-            `;
-            customDataList.appendChild(listItem);
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+            <div class="card-content">
+                <div class="card-field"><strong>ID:</strong> ${item.id}</div>
+                <div class="card-field"><strong>Target Index:</strong> ${item.targetIndex}</div>
+                <div class="card-field"><strong>Images:</strong> <span class="truncate">${item.images.map(img => img.src).join(', ')}</span></div>
+                <div class="card-field"><strong>Filter:</strong> <span class="truncate">${item.filter}</span></div>
+                <div class="card-field"><strong>Web:</strong> <span class="truncate">${item.web}</span></div>
+                <div class="card-field"><strong>Location:</strong> <span class="truncate">${item.location}</span></div>
+                <div class="card-field"><strong>Video:</strong> <span class="truncate">${item.video.src}</span></div>
+                <div class="card-field"><strong>Text:</strong> <span class="truncate">${item.text}</span></div>
+                <div class="card-actions">
+                    <button onclick="editItem(${index})">Editar</button>
+                    <button onclick="deleteItem(${index})">Eliminar</button>
+                </div>
+            </div>
+        `;
+            customDataList.appendChild(card);
         });
     }
 
@@ -46,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         form.id.value = item.id;
         form.targetIndex.value = item.targetIndex;
         form.images.value = item.images.map(img => img.src).join(', ');
+        form.filter.value = item.filter;
         form.web.value = item.web;
         form.location.value = item.location;
         form.video.value = item.video.src;
@@ -71,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 src: url.trim(),
                 alt: formData.get('id')
             })),
+            filter: formData.get('filter'),
             web: formData.get('web'),
             location: formData.get('location'),
             video: { id: `${formData.get('id')}_video_1`, src: formData.get('video') },
@@ -81,8 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index !== undefined) {
             customData[index] = newObject;
             delete form.dataset.index;
-        }
-        else {
+        } else {
             customData.push(newObject);
         }
         localStorage.setItem('customData', JSON.stringify(customData));
