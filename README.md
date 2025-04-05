@@ -28,19 +28,19 @@ promoviendo así la difusión del patrimonio cultural y natural a nivel internac
 
 ## Escaneo de Maravillas
 ![turisar_scan_mobile_horizontal](./assets/readme/mobile/turisar_scan_mobile_horizontal.png)
-![example_tikal_mobile](./assets/readme/mobile/example_tikal_mobile.png)
+![example_tikal_mobile](assets/readme/mobile/example_tikal/example_tikal_mobile.png)
 
 ## Interacción con el usuario
-![tikal_mobile_1.png](assets/readme/mobile/tikal_mobile_1.png)
-![tikal_mobile_2.png](assets/readme/mobile/tikal_mobile_2.png)
-![tikal_mobile_3.png](assets/readme/mobile/tikal_mobile_3.png)
+![tikal_mobile_1.png](assets/readme/mobile/example_tikal/tikal_mobile_1.png)
+![tikal_mobile_2.png](assets/readme/mobile/example_tikal/tikal_mobile_2.png)
+![tikal_mobile_3.png](assets/readme/mobile/example_tikal/tikal_mobile_3.png)
 
 ## Google Maps y Sitio Web externo
-![tikal_mobile_4.png](assets/readme/mobile/tikal_mobile_4.png)
-![tikal_mobile_5.png](assets/readme/mobile/tikal_mobile_5.png)
+![tikal_mobile_4.png](assets/readme/mobile/example_tikal/tikal_mobile_4.png)
+![tikal_mobile_5.png](assets/readme/mobile/example_tikal/tikal_mobile_5.png)
 
 ## Filtro
-![tikal_mobile_filter.png](assets/readme/mobile/tikal_mobile_filter.png)
+![tikal_mobile_filter.png](assets/readme/mobile/example_tikal/tikal_mobile_filter.png)
 
 ## Modulo Administrador
 
